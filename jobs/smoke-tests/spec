@@ -1,0 +1,8 @@
+---
+name: smoke-tests
+
+templates: {}
+
+packages: []
+
+properties: {}

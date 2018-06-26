@@ -1,11 +1,43 @@
 ---
 name: smoke-tests
 
-templates: 
+templates:
   run.sh: bin/run
+  config.json.erb: config.json
 
-packages: 
+packages:
 - golang-1.10-linux
-- cf-rabbitmq-smoke-tests  
+- cf-rabbitmq-smoke-tests
 
-properties: {}
+consumes:
+- name: cloud_controller
+  type: cloud_controller
+  optional: true
+
+properties:
+  cf.domain:
+    description: 'Sys domain for Cloud Foundry'
+  cf.api_url:
+    description: 'Full URL of Cloud Foundry API'
+  cf.admin_username:
+    description: 'Username of the admin user'
+  cf.admin_password:
+    description: 'Password of the admin user'
+
+  smoke_tests.org:
+    description: Pre-existing CF organization to be used by the smoke tests errand
+    default: ""
+  smoke_tests.apps_domain:
+    description: 'App domain for Cloud Foundry. Defaults to cf.domain.'
+  smoke_tests.timeout_scale:
+    description: Timeout scale to be used by the smoke tests errand
+    default: 30.0
+
+  broker.name:
+    description: Service name displayed in the catalog metadata
+    default: p-rabbitmq
+
+  tls_support:
+    description: TLS configuration for  service instances (disabled, optional or enforced)
+    default: disabled
+

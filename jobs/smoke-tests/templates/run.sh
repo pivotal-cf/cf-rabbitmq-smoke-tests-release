@@ -4,8 +4,8 @@ set -e
 source /var/vcap/packages/golang-1.10-linux/bosh/runtime.env
 
 # TODO - what are these????
-# . /var/vcap/jobs/smoke-tests/bin/change-permissions
-# . /var/vcap/jobs/smoke-tests/bin/permissions-test
+. /var/vcap/jobs/smoke-tests/bin/change-permissions
+. /var/vcap/jobs/smoke-tests/bin/permissions-test
 
 export GOPATH=/var/vcap/packages/cf-rabbitmq-smoke-tests
 # export GOROOT=/var/vcap/packages/golang

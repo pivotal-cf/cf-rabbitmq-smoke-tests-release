@@ -4,6 +4,8 @@ name: smoke-tests
 templates:
   run.sh: bin/run
   config.json.erb: config.json
+  change-permissions.sh: bin/change-permissions
+  permissions-test.sh: bin/permissions-test
 
 packages:
 - golang-1.10-linux

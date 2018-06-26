@@ -1,8 +1,11 @@
 ---
 name: smoke-tests
 
-templates: {}
+templates: 
+  run.sh: bin/run
 
-packages: []
+packages: 
+- golang-1.10-linux
+- cf-rabbitmq-smoke-tests  
 
 properties: {}

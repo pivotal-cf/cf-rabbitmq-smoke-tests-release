@@ -1,0 +1,41 @@
+---
+name: ((deployment-name))
+
+instance_groups:
+- azs:
+  - z1
+  instances: 1
+  name: smoke-tests
+  networks:
+  - name: ((network))
+  stemcell: trusty
+  vm_type: ((vm_type))
+  jobs:
+  - name: smoke-tests
+    release: cf-rabbitmq-smoke-tests
+    properties:
+      cf:
+        api_url: https://api.((system-domain))
+        domain: ((system-domain))
+        admin_username: ((cf-admin-username))
+        admin_password: ((cf-admin-password))
+      broker:
+        name: ((product-name))
+      smoke_tests:
+        org: system
+
+releases:
+- name: cf-rabbitmq-smoke-tests
+  version: latest
+
+stemcells:
+- alias: trusty
+  os: ubuntu-trusty
+  version: ((stemcell-version))
+
+update:
+  canaries: 1
+  canary_watch_time: 30000-180000
+  max_in_flight: 4
+  serial: false
+  update_watch_time: 30000-180000

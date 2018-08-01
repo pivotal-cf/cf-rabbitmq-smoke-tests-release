@@ -12,7 +12,7 @@ instance_groups:
   vm_type: ((vm_type))
   jobs:
   - name: smoke-tests
-    release: cf-rabbitmq-smoke-tests
+    release: cf-rabbitmq-smoke-tests-release
     properties:
       cf:
         api_url: https://api.((system-domain))
@@ -25,7 +25,7 @@ instance_groups:
         org: system
 
 releases:
-- name: cf-rabbitmq-smoke-tests
+- name: cf-rabbitmq-smoke-tests-release
   version: latest
 
 stemcells:

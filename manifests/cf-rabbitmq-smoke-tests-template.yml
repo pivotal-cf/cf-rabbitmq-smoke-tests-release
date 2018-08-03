@@ -23,6 +23,18 @@ instance_groups:
         name: ((product-name))
       smoke_tests:
         org: system
+ - name: on-demand-broker-smoke-tests
+    release: cf-rabbitmq-smoke-tests-release
+    properties:
+      cf:
+        api_url: https://api.((system-domain))
+        domain: ((system-domain))
+        admin_username: ((cf-admin-username))
+        admin_password: ((cf-admin-password))
+      broker:
+        name: ((product-name))
+      smoke_tests:
+        org: system
 
 releases:
 - name: cf-rabbitmq-smoke-tests-release

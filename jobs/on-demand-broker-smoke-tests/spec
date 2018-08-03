@@ -1,5 +1,5 @@
 ---
-name: smoke-tests
+name: on-demand-broker-smoke-tests
 
 templates:
   run.sh: bin/run

@@ -5,7 +5,7 @@ packages:
 - cf-rabbitmq-smoke-tests
 
 templates:
-  run.sh.erb: bin/run
+  run.sh: bin/run
   config.json.erb: config.json
 
 properties:

@@ -1,45 +1,27 @@
 ---
 name: on-demand-broker-smoke-tests
-
-templates:
-  run.sh: bin/run
-  config.json.erb: config.json
-  change-permissions.sh: bin/change-permissions
-  permissions-test.sh: bin/permissions-test
-
 packages:
 - golang-1.10-linux
 - cf-rabbitmq-smoke-tests
 
-consumes:
-- name: cloud_controller
-  type: cloud_controller
-  optional: true
+templates:
+  errand.sh.erb: bin/run
+  config.json.erb: config.json
 
 properties:
-  cf.domain:
-    description: 'Sys domain for Cloud Foundry'
   cf.api_url:
     description: 'Full URL of Cloud Foundry API'
   cf.admin_username:
     description: 'Username of the admin user'
   cf.admin_password:
     description: 'Password of the admin user'
-
-  smoke_tests.org:
+  cf.org:
     description: Pre-existing CF organization to be used by the smoke tests errand
-    default: ""
-  smoke_tests.apps_domain:
-    description: 'App domain for Cloud Foundry. Defaults to cf.domain.'
-  smoke_tests.timeout_scale:
-    description: Timeout scale to be used by the smoke tests errand
-    default: 30.0
-
-  broker.name:
-    description: Service name displayed in the catalog metadata
-    default: p-rabbitmq
-
+  cf.service_offering_name:
+    description: CF Service Offering name
+  cf.plans:
+    description: CF On Demand Broker plans to test
   tls_support:
-    description: TLS configuration for  service instances (disabled, optional or enforced)
+    description: TLS configuration for on-demand service instances (disabled, optional or enforced)
     default: disabled
 

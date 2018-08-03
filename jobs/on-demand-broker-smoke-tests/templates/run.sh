@@ -4,8 +4,8 @@ set -e
 source /var/vcap/packages/golang-1.10-linux/bosh/runtime.env
 
 # TODO - what are these????
-. /var/vcap/jobs/smoke-tests/bin/change-permissions
-. /var/vcap/jobs/smoke-tests/bin/permissions-test
+. /var/vcap/jobs/on-demand-broker-smoke-tests/bin/change-permissions
+. /var/vcap/jobs/on-demand-broker-smoke-tests/bin/permissions-test
 
 export GOPATH=/var/vcap/packages/cf-rabbitmq-smoke-tests
 # export GOROOT=/var/vcap/packages/golang
@@ -13,7 +13,7 @@ export PATH=/var/vcap/packages/cf-cli-6-linux/bin:$GOPATH/bin:$GOROOT/bin:$PATH
 export REPO_NAME=github.com/pivotal-cf/cf-rabbitmq-smoke-tests
 export REPO_DIR=${GOPATH}/src/${REPO_NAME}
 
-export CONFIG_PATH=/var/vcap/jobs/smoke-tests/config.json
+export CONFIG_PATH=/var/vcap/jobs/on-demand-broker-smoke-tests/config.json
 
 export CF_DIAL_TIMEOUT=11
 

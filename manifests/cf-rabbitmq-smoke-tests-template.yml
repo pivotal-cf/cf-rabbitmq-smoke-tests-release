@@ -28,13 +28,14 @@ instance_groups:
     properties:
       cf:
         api_url: https://api.((system-domain))
-        domain: ((system-domain))
         admin_username: ((cf-admin-username))
         admin_password: ((cf-admin-password))
+        org: system
+        plans:
+          - name: doesnt_matter
+        service_offering_name: dummy_offering
       broker:
         name: ((product-name))
-      smoke_tests:
-        org: system
 
 releases:
 - name: cf-rabbitmq-smoke-tests-release

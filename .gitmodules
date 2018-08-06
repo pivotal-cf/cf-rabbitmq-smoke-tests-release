@@ -1,3 +1,0 @@
-[submodule "src/github.com/pivotal-cf/cf-rabbitmq-smoke-tests"]
-	path = src/github.com/pivotal-cf/cf-rabbitmq-smoke-tests
-	url = git@github.com:pivotal-cf/cf-rabbitmq-smoke-tests.git

@@ -19,5 +19,5 @@ export SMOKE_TESTS_TIMEOUT=1h
 pushd ${REPO_DIR}
   echo "Running multitenant smoke tests"
   go install -v github.com/onsi/ginkgo/ginkgo
-  ginkgo -v --trace -randomizeSuites=true -randomizeAllSpecs=true -keepGoing=true ---timeout="$SMOKE_TESTS_TIMEOUT" -failOnPending tests
+  ginkgo -v --trace -randomizeSuites=true -randomizeAllSpecs=true -keepGoing=true --timeout="$SMOKE_TESTS_TIMEOUT" -failOnPending tests
 popd

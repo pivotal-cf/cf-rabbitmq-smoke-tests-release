@@ -6,7 +6,7 @@ source /var/vcap/packages/golang-1.10-linux/bosh/runtime.env
 export GOPATH=/var/vcap/packages/cf-rabbitmq-smoke-tests
 export PATH=/var/vcap/packages/cf-cli-6-linux/bin:$GOPATH/bin:$GOROOT/bin:$PATH
 
-export PACKAGE_DIR=${GOPATH}/rabbitmq-smoke-tests
+export PACKAGE_DIR=${GOPATH}/src/rabbitmq-smoke-tests
 
 export CF_DIAL_TIMEOUT=11
 export CF_HOME="/tmp/cf_home"

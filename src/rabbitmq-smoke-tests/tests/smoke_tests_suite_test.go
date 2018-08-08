@@ -6,11 +6,12 @@ import (
 	"os"
 	"time"
 
+	"rabbitmq-smoke-tests/tests/helper"
+
 	"github.com/cloudfoundry-incubator/cf-test-helpers/config"
 	"github.com/cloudfoundry-incubator/cf-test-helpers/workflowhelpers"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
-	"github.com/pivotal-cf/cf-rabbitmq-smoke-tests/tests/helper"
 
 	"testing"
 )

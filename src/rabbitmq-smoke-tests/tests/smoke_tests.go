@@ -3,10 +3,11 @@ package smoke_tests
 import (
 	"fmt"
 
+	"rabbitmq-smoke-tests/tests/helper"
+
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/pborman/uuid"
-	"github.com/pivotal-cf/cf-rabbitmq-smoke-tests/tests/helper"
 )
 
 var _ = Describe("Smoke tests", func() {

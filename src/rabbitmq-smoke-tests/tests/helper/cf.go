@@ -15,7 +15,7 @@ import (
 )
 
 const RETRY_LIMIT = 5
-const COMMAND_TIMEOUT = 2 * time.Minute
+const COMMAND_TIMEOUT = 5 * time.Minute
 
 func CfWithTimeout(timeout time.Duration, args ...string) *gexec.Session {
 	session := cf.Cf(args...)

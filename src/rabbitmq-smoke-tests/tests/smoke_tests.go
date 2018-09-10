@@ -53,6 +53,6 @@ var _ = Describe("Smoke tests", func() {
 
 	for _, plan := range testConfig.TestPlans {
 		It(fmt.Sprintf("pushes an app, sends, and reads a message from RabbitMQ: plan '%s'", plan.Name),
-			smokeTestForPlan(plan.Name), 300.0) // seconds
+			smokeTestForPlan(plan.Name))
 	}
 })

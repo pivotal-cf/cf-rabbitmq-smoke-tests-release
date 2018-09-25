@@ -1,0 +1,25 @@
+#!/bin/bash
+set -e
+[ -z "${DEBUG:-""}" ] || set -x
+
+usage() {
+  echo "Usage: `basename $0` [previous]"
+  echo
+  echo "  PREVIOUS defaults to the last final release on GitHub"
+  exit 1
+}
+
+if [[ -z "$1" ]]; then
+  previous=$(hub release -L 1)
+elif [[ "$1" == "-h" ]]; then
+  usage
+else
+  previous=$1
+fi
+
+commits="$(git log --pretty=format:'- %s [%h]' HEAD..."$previous")"
+
+cat <<END
+**Release Notes:**
+$commits
+END

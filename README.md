@@ -11,4 +11,4 @@ In order to run the tests for development:
 - Run `make test` with `CONFIG_PATH` set to your config file
 
 ## Notes
-- Run `make` to list all options
+- Change directory to `src/rabbitmq-smoke-tests` and run `make` to list all options

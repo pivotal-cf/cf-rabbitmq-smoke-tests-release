@@ -1,7 +1,7 @@
 ###### Help ###################################################################
 
 help:
-	@echo '    deps ...................................... installs dependencies'
+	@echo '    deps ...................................... installs dependencies and updates submodules'
 	@echo '    go-vet .................................... runs go vet in source code'
 	@echo '    test ...................................... runs test'
 

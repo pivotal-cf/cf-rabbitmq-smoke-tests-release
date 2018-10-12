@@ -27,8 +27,6 @@ builds:
     version: 13.0.0
   ce07862f-7e00-43a6-7f3f-3fe9992d5db6:
     version: 4.0.0
-  f52cc01b-9301-47e2-7abf-ac5848a8fca8:
-    version: 16.0.0
   f5dcfb2b-4c16-4ed3-6357-073d1ea512dd:
     version: 3.0.0
 format-version: "2"

@@ -32,7 +32,8 @@ func ReceiveMessage(testAppURL, queueName string) string {
 	)
 	getReq.Header.Add("Content-Type", "text/plain")
 	Expect(err).ToNot(HaveOccurred())
-	return makeAndCheckHttpRequest(getReq)
+	msg := makeAndCheckHttpRequest(getReq)
+	return strings.TrimSpace(msg)
 }
 
 func makeAndCheckHttpRequest(req *http.Request) string {

@@ -35,6 +35,11 @@ var _ = Describe("Smoke tests", func() {
 				helper.EnableTLSForODB(serviceName)
 			}
 
+			defer func() {
+				By("unbinding the app")
+				helper.UnbindService(appName, serviceName)
+			}()
+
 			By("pushing and binding an app")
 			appURL := helper.PushAndBindApp(appName, serviceName, appPath)
 
@@ -45,9 +50,6 @@ var _ = Describe("Smoke tests", func() {
 			helper.SendMessage(appURL, queue, "bar")
 			Expect(helper.ReceiveMessage(appURL, queue)).To(Equal("foo"))
 			Expect(helper.ReceiveMessage(appURL, queue)).To(Equal("bar"))
-
-			By("unbinding the app")
-			helper.UnbindService(appName, serviceName)
 		}
 	}
 

@@ -92,6 +92,12 @@ func PrintAppLogs(appName string) {
 	Expect(Cf("logs", appName, "--recent")).To(gexec.Exit(0))
 }
 
+func RetrieveMetrics(serviceName string) string {
+	session := Cf("tail", "--lines", "1", serviceName)
+	Expect(session).To(gexec.Exit(0))
+	return string(session.Buffer().Contents())
+}
+
 func CreateService(serviceOffering, servicePlan, serviceName string) {
 	Expect(Cf("create-service", serviceOffering, servicePlan, serviceName)).To(gexec.Exit(0))
 	AwaitServiceAvailable(serviceName)

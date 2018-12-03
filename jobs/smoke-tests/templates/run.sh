@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-source /var/vcap/packages/golang-1.10-linux/bosh/runtime.env
+source /var/vcap/packages/cf-rabbitmq-smoke-tests-golang/bosh/runtime.env
 
 . /var/vcap/jobs/smoke-tests/bin/change-permissions
 . /var/vcap/jobs/smoke-tests/bin/permissions-test

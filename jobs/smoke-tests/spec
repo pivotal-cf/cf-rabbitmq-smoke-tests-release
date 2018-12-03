@@ -8,8 +8,8 @@ templates:
   permissions-test.sh: bin/permissions-test
 
 packages:
-- golang-1.10-linux
 - cf-rabbitmq-smoke-tests
+- cf-rabbitmq-smoke-tests-golang
 
 consumes:
 - name: cloud_controller

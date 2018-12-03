@@ -1,7 +1,7 @@
 ---
 name: on-demand-broker-smoke-tests
 packages:
-- golang-1.10-linux
+- cf-rabbitmq-smoke-tests-golang
 - cf-rabbitmq-smoke-tests
 
 templates:

@@ -39,6 +39,8 @@ builds:
     version: 21.0.0
   d3235d68-3ef3-4ad7-5ffb-cd0e20d8eba2:
     version: 16.0.0
+  d4a38508-1def-4e08-7deb-527c6bbb0d34:
+    version: 22.0.0
   f5dcfb2b-4c16-4ed3-6357-073d1ea512dd:
     version: 3.0.0
 format-version: "2"

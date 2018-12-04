@@ -16,6 +16,7 @@ export SMOKE_TESTS_TIMEOUT=1h
 
 pushd ${PACKAGE_DIR}
   echo "Running multitenant smoke tests"
-  go install -v github.com/onsi/ginkgo/ginkgo
-  ginkgo -v --trace -randomizeSuites=true -randomizeAllSpecs=true -keepGoing=true --timeout="$SMOKE_TESTS_TIMEOUT" -failOnPending tests
+  # Disbale Go modules and cgo to avoid issue https://github.com/golang/go/issues/26988
+  CGO_ENABLED=0 GO111MODULE=off go install -v github.com/onsi/ginkgo/ginkgo
+  CGO_ENABLED=0 GO111MODULE=off ginkgo -v --trace -randomizeSuites=true -randomizeAllSpecs=true -keepGoing=true --timeout="$SMOKE_TESTS_TIMEOUT" -failOnPending tests
 popd

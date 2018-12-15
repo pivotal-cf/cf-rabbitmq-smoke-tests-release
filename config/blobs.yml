@@ -1,5 +1,5 @@
 ---
-cf-rabbitmq-smoke-tests-golang/go1.11.3.linux-amd64.tar.gz:
-  size: 126540191
-  object_id: '0680d454-5be6-426f-5bc6-af01262892b6'
-  sha: sha256:d20a4869ffb13cee0f7ee777bf18c7b9b67ef0375f93fac1298519e0c227a07f
+cf-rabbitmq-smoke-tests-golang/go1.11.4.linux-amd64.tar.gz:
+  size: 126643341
+  object_id: 338f2f61-5ef0-49d3-635e-04a6b0f74997
+  sha: sha256:fb26c30e6a04ad937bbc657a1b5bba92f80096af1e8ee6da6430c045a8db3a5b

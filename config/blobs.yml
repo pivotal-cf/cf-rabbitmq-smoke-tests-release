@@ -1,4 +1,9 @@
----
+cf-rabbitmq-smoke-tests-ginkgo/ginkgo-v1.7.0.tar.gz:
+  size: 132975
+  sha: 0fe1f3d58390218f5e62e1c647041ac9ed7caba0
+cf-rabbitmq-smoke-tests-ginkgo/tail-v1.0.0.tar.gz:
+  size: 37816
+  sha: 1a73f96f30b133ba6255c33490fb4b31ac6c0326
 cf-rabbitmq-smoke-tests-golang/go1.11.4.linux-amd64.tar.gz:
   size: 126643341
   object_id: 338f2f61-5ef0-49d3-635e-04a6b0f74997

@@ -8,7 +8,7 @@ instance_groups:
   name: smoke-tests
   networks:
   - name: ((network))
-  stemcell: trusty
+  stemcell: xenial
   vm_type: ((vm_type))
   jobs:
   - name: smoke-tests
@@ -42,8 +42,8 @@ releases:
   version: latest
 
 stemcells:
-- alias: trusty
-  os: ubuntu-trusty
+- alias: xenial
+  os: ubuntu-xenial
   version: ((stemcell-version))
 
 update:

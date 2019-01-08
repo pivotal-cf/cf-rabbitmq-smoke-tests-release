@@ -1,7 +1,9 @@
 ---
 name: cf-rabbitmq-smoke-tests-ginkgo
 metadata:
-  version: '1.7.0'
+  version
+    ginkgo: '1.7.0'
+    tail: '1.0.0'
 
 dependencies:
 - cf-rabbitmq-smoke-tests-golang

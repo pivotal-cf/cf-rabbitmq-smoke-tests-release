@@ -1,7 +1,7 @@
 ---
 name: cf-rabbitmq-smoke-tests-ginkgo
 metadata:
-  version
+  version:
     ginkgo: '1.7.0'
     tail: '1.0.0'
 

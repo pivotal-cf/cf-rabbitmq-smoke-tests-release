@@ -6,9 +6,9 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/cloudfoundry-incubator/cf-test-helpers/generator"
 	"github.com/cloudfoundry-incubator/cf-test-helpers/internal"
 	"github.com/onsi/ginkgo"
-	ginkgoconfig "github.com/onsi/ginkgo/config"
 	. "github.com/onsi/gomega"
 	. "github.com/onsi/gomega/gbytes"
 	. "github.com/onsi/gomega/gexec"
@@ -22,19 +22,34 @@ type TestUser struct {
 	shouldKeepUser bool
 }
 
-type userConfig interface {
+type UserConfig interface {
 	GetUseExistingUser() bool
 	GetExistingUser() string
 	GetExistingUserPassword() string
-	GetConfigurableTestPassword() string
-	GetScaledTimeout(time.Duration) time.Duration
 	GetShouldKeepUser() bool
+	GetConfigurableTestPassword() string
+}
+
+type userConfig interface {
+	UserConfig
+
+	GetScaledTimeout(time.Duration) time.Duration
 	GetNamePrefix() string
 }
 
-type adminuserConfig interface {
+type AdminUserConfig interface {
 	GetAdminUser() string
 	GetAdminPassword() string
+}
+
+type ClientConfig interface {
+	GetExistingClient() string
+	GetExistingClientSecret() string
+}
+
+type AdminClientConfig interface {
+	GetAdminClient() string
+	GetAdminClientSecret() string
 }
 
 func NewTestUser(config userConfig, cmdStarter internal.Starter) *TestUser {
@@ -44,7 +59,7 @@ func NewTestUser(config userConfig, cmdStarter internal.Starter) *TestUser {
 		regUser = config.GetExistingUser()
 		regUserPass = config.GetExistingUserPassword()
 	} else {
-		regUser = generateUserName(config.GetNamePrefix())
+		regUser = generator.PrefixedRandomName(config.GetNamePrefix(), "USER")
 		regUserPass = generatePassword()
 	}
 
@@ -61,10 +76,26 @@ func NewTestUser(config userConfig, cmdStarter internal.Starter) *TestUser {
 	}
 }
 
-func NewAdminUser(config adminuserConfig, cmdStarter internal.Starter) *TestUser {
+func NewAdminUser(config AdminUserConfig, cmdStarter internal.Starter) *TestUser {
 	return &TestUser{
 		username:   config.GetAdminUser(),
 		password:   config.GetAdminPassword(),
+		cmdStarter: cmdStarter,
+	}
+}
+
+func NewAdminClient(config AdminClientConfig, cmdStarter internal.Starter) *TestUser {
+	return &TestUser{
+		username:   config.GetAdminClient(),
+		password:   config.GetAdminClientSecret(),
+		cmdStarter: cmdStarter,
+	}
+}
+
+func NewTestClient(config ClientConfig, cmdStarter internal.Starter) *TestUser {
+	return &TestUser{
+		username:   config.GetExistingClient(),
+		password:   config.GetExistingClientSecret(),
 		cmdStarter: cmdStarter,
 	}
 }
@@ -103,12 +134,6 @@ func combineOutputAndRedact(session *Session, redactor internal.Redactor) *Buffe
 	stderr := redactor.Redact(string(session.Err.Contents()))
 
 	return BufferWithBytes(append([]byte(stdout), []byte(stderr)...))
-}
-
-func generateUserName(prefix string) string {
-	node := ginkgoconfig.GinkgoConfig.ParallelNode
-	timeTag := time.Now().Format("2006_01_02-15h04m05.999s")
-	return fmt.Sprintf("%s-USER-%d-%s", prefix, node, timeTag)
 }
 
 // The key thing that makes a password secure is the _entropy_ that comes from a

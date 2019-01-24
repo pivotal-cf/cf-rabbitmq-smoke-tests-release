@@ -10,5 +10,11 @@ In order to run the tests for development:
   - The `service_offering` and `plans` names
 - Run `make test` with `CONFIG_PATH` set to your config file
 
+## Create BOSH release
+```bash
+$ bosh sync-blobs
+$ bosh create-release #--force --tarball=cf-rabbitmq-smoke-tests-release-VERSION.tgz
+```
+
 ## Notes
 - Change directory to `src/rabbitmq-smoke-tests` and run `make` to list all options

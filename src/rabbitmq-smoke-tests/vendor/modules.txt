@@ -52,7 +52,7 @@ github.com/onsi/gomega/matchers/support/goraph/node
 github.com/onsi/gomega/matchers/support/goraph/util
 # github.com/pborman/uuid v1.2.0
 github.com/pborman/uuid
-# golang.org/x/net v0.0.0-20190125002852-4b62a64f59f7
+# golang.org/x/net v0.0.0-20190125091013-d26f9f9a57f3
 golang.org/x/net/html/charset
 golang.org/x/net/html
 golang.org/x/net/html/atom

@@ -1,7 +1,7 @@
 ---
 name: cf-rabbitmq-smoke-tests-golang
 metadata:
-  version: '1.11.5'
+  version: '1.12'
 
 files:
-  - cf-rabbitmq-smoke-tests-golang/go1.11.5.linux-amd64.tar.gz
+  - cf-rabbitmq-smoke-tests-golang/go1.12.linux-amd64.tar.gz

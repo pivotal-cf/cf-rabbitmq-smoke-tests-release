@@ -32,7 +32,8 @@ var _ = Describe("Smoke tests", func() {
 
 			if useTLS && testConfig.ServiceOffering == "p.rabbitmq" {
 				By("enabling TLS")
-				helper.EnableTLSForODB(serviceName)
+				useHostnames := false
+				helper.EnableTLSForODB(serviceName, useHostnames)
 			}
 
 			defer func() {

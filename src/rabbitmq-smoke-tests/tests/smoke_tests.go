@@ -23,18 +23,12 @@ var _ = Describe("Smoke tests", func() {
 	smokeTestForPlan := func(planName string) func() {
 		return func() {
 			serviceName := fmt.Sprintf("rmq-smoke-test-instance-%s", uuid.New()[:18])
-			helper.CreateService(testConfig.ServiceOffering, planName, serviceName)
+			helper.CreateService(testConfig.ServiceOffering, planName, serviceName, useTLS)
 
 			defer func() {
 				By("deleting the service instance")
 				helper.DeleteService(serviceName)
 			}()
-
-			if useTLS && testConfig.ServiceOffering == "p.rabbitmq" {
-				By("enabling TLS")
-				useHostnames := false
-				helper.EnableTLSForODB(serviceName, useHostnames)
-			}
 
 			defer func() {
 				By("unbinding the app")

@@ -11,21 +11,6 @@ const keyName = "service-key-for-tls"
 
 var serviceKeyHeader = regexp.MustCompile(`^\s*Getting key .*`)
 
-func EnableTLSForODB(serviceName string, useHostnames bool) {
-	var tlsConfig string
-	if useHostnames {
-		CreateServiceKey(serviceName, keyName)
-		key := GetServiceKey(serviceName, keyName)
-		DeleteServiceKey(serviceName, keyName)
-
-		tlsConfig = readTLSConfigFromServiceKey(key)
-	} else {
-		tlsConfig = generateTLSConfigBoolean()
-	}
-
-	UpdateService(serviceName, tlsConfig)
-}
-
 func readTLSConfigFromServiceKey(serviceKey []byte) string {
 	chopped := serviceKeyHeader.ReplaceAllLiteral(serviceKey, []byte{})
 	hostnames := parseServiceKey(chopped)
@@ -42,7 +27,7 @@ func parseServiceKey(chopped []byte) []string {
 	return serviceKeyData.Hostnames
 }
 
-func generateTLSConfigBoolean() string {
+func GenerateTLSConfigBoolean() string {
 	type tlsConfigData struct {
 		TLS bool `json:"tls"`
 	}

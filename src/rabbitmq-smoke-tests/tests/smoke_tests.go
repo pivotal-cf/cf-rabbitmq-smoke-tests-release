@@ -23,7 +23,7 @@ var _ = Describe("Smoke tests", func() {
 	smokeTestForPlan := func(planName string) func() {
 		return func() {
 			serviceName := fmt.Sprintf("rmq-smoke-test-instance-%s", uuid.New()[:18])
-			helper.CreateService(testConfig.ServiceOffering, planName, serviceName, useTLS)
+			helper.CreateService(testConfig.ServiceOffering, planName, serviceName, useTLS, testConfig.BindingWithDNS)
 
 			defer func() {
 				By("deleting the service instance")

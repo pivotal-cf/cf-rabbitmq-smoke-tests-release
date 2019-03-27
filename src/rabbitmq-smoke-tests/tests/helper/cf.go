@@ -98,9 +98,9 @@ func RetrieveMetrics(serviceName string) string {
 	return string(session.Buffer().Contents())
 }
 
-func CreateService(serviceOffering, servicePlan, serviceName string, useTLS bool) {
+func CreateService(serviceOffering, servicePlan, serviceName string, useTLS, useDNSBinding bool) {
 	if useTLS && serviceOffering == "p.rabbitmq" {
-		params := GenerateTLSConfigBoolean()
+		params := GenerateTLSConfig(serviceName, useDNSBinding)
 		Expect(Cf("create-service", serviceOffering, servicePlan, serviceName, "-c", params)).To(gexec.Exit(0))
 	} else {
 		Expect(Cf("create-service", serviceOffering, servicePlan, serviceName)).To(gexec.Exit(0))

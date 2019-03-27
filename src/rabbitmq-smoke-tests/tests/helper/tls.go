@@ -17,6 +17,13 @@ func readTLSConfigFromServiceKey(serviceKey []byte) string {
 	return generateTLSConfigFromHostnames(hostnames)
 }
 
+func generateServiceKeyOutput(serviceName string) []byte {
+	CreateServiceKey(serviceName, keyName)
+	key := GetServiceKey(serviceName, keyName)
+	DeleteServiceKey(serviceName, keyName)
+	return key
+}
+
 func parseServiceKey(chopped []byte) []string {
 	var serviceKeyData struct {
 		Hostnames []string `json:"hostnames"`
@@ -25,6 +32,18 @@ func parseServiceKey(chopped []byte) []string {
 	Expect(err).NotTo(HaveOccurred())
 	Expect(serviceKeyData.Hostnames).ToNot(HaveLen(0))
 	return serviceKeyData.Hostnames
+}
+
+func GenerateTLSConfig(serviceName string, useDNSBinding bool) string {
+	var tlsConfig string
+
+	if useDNSBinding {
+		tlsConfig = GenerateTLSConfigBoolean()
+	} else {
+		key := generateServiceKeyOutput(serviceName)
+		tlsConfig = readTLSConfigFromServiceKey(key)
+	}
+	return tlsConfig
 }
 
 func GenerateTLSConfigBoolean() string {

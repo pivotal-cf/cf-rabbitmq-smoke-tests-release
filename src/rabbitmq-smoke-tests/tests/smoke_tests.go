@@ -30,6 +30,13 @@ var _ = Describe("Smoke tests", func() {
 				helper.DeleteService(serviceName)
 			}()
 
+			// On a system with no DNS binding, TLS cannot be enabled at service creation time, so for coverage try it now.
+			if useTLS && testConfig.ServiceOffering == "p.rabbitmq" && !testConfig.BindingWithDNS {
+				By("enabling TLS")
+				tlsConfig := helper.GenerateTLSConfig(serviceName, testConfig.BindingWithDNS)
+				helper.UpdateService(serviceName, tlsConfig)
+			}
+
 			defer func() {
 				By("unbinding the app")
 				helper.UnbindService(appName, serviceName)

@@ -25,4 +25,6 @@ properties:
   tls_support:
     description: TLS configuration for on-demand service instances (disabled, optional or enforced)
     default: disabled
-
+  binding_with_dns:
+    description: Whether BOSH DNS is enabled or not
+    default: false

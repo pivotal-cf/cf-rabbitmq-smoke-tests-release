@@ -14,7 +14,8 @@ conf = {
   skip_ssl_validation: true,
   service_offering: p("cf.service_offering_name"),
   plans: p("cf.plans").reject { |plan| plan.nil? },
-  tls_support: p("tls_support")
+  tls_support: p("tls_support"),
+  binding_with_dns: p("binding_with_dns")
 }
 
 %>

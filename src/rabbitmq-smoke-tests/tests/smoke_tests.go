@@ -23,17 +23,23 @@ var _ = Describe("Smoke tests", func() {
 	smokeTestForPlan := func(planName string) func() {
 		return func() {
 			serviceName := fmt.Sprintf("rmq-smoke-test-instance-%s", uuid.New()[:18])
-			helper.CreateService(testConfig.ServiceOffering, planName, serviceName, useTLS, testConfig.BindingWithDNS)
+
+			if useTLS && testConfig.ServiceOffering == "p.rabbitmq" && testConfig.BindingWithDNS {
+				By("creating the service instance with TLS enabled")
+				helper.CreateService(testConfig.ServiceOffering, planName, serviceName, `{"tls": true}`)
+			} else {
+				By("creating the service instance")
+				helper.CreateService(testConfig.ServiceOffering, planName, serviceName, "")
+			}
 
 			defer func() {
 				By("deleting the service instance")
 				helper.DeleteService(serviceName)
 			}()
 
-			// On a system with no DNS binding, TLS cannot be enabled at service creation time, so for coverage try it now.
 			if useTLS && testConfig.ServiceOffering == "p.rabbitmq" && !testConfig.BindingWithDNS {
-				By("enabling TLS")
-				tlsConfig := helper.GenerateTLSConfig(serviceName, testConfig.BindingWithDNS)
+				By("updating the service to enable TLS")
+				tlsConfig := helper.TLSConfigUsingIPs(serviceName)
 				helper.UpdateService(serviceName, tlsConfig)
 			}
 

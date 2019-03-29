@@ -11,10 +11,9 @@ const keyName = "service-key-for-tls"
 
 var serviceKeyHeader = regexp.MustCompile(`^\s*Getting key .*`)
 
-func readTLSConfigFromServiceKey(serviceKey []byte) string {
-	chopped := serviceKeyHeader.ReplaceAllLiteral(serviceKey, []byte{})
-	hostnames := parseServiceKey(chopped)
-	return generateTLSConfigFromHostnames(hostnames)
+func TLSConfigUsingIPs(serviceName string) string {
+	key := generateServiceKeyOutput(serviceName)
+	return readTLSConfigFromServiceKey(key)
 }
 
 func generateServiceKeyOutput(serviceName string) []byte {
@@ -22,6 +21,12 @@ func generateServiceKeyOutput(serviceName string) []byte {
 	key := GetServiceKey(serviceName, keyName)
 	DeleteServiceKey(serviceName, keyName)
 	return key
+}
+
+func readTLSConfigFromServiceKey(serviceKey []byte) string {
+	chopped := serviceKeyHeader.ReplaceAllLiteral(serviceKey, []byte{})
+	hostnames := parseServiceKey(chopped)
+	return generateTLSConfigFromHostnames(hostnames)
 }
 
 func parseServiceKey(chopped []byte) []string {
@@ -32,32 +37,6 @@ func parseServiceKey(chopped []byte) []string {
 	Expect(err).NotTo(HaveOccurred())
 	Expect(serviceKeyData.Hostnames).ToNot(HaveLen(0))
 	return serviceKeyData.Hostnames
-}
-
-func GenerateTLSConfig(serviceName string, useDNSBinding bool) string {
-	var tlsConfig string
-
-	if useDNSBinding {
-		tlsConfig = GenerateTLSConfigBoolean()
-	} else {
-		key := generateServiceKeyOutput(serviceName)
-		tlsConfig = readTLSConfigFromServiceKey(key)
-	}
-	return tlsConfig
-}
-
-func GenerateTLSConfigBoolean() string {
-	type tlsConfigData struct {
-		TLS bool `json:"tls"`
-	}
-
-	tlsConfig := tlsConfigData{
-		TLS: true,
-	}
-
-	config, err := json.Marshal(tlsConfig)
-	Expect(err).NotTo(HaveOccurred())
-	return string(config)
 }
 
 func generateTLSConfigFromHostnames(hostnames []string) string {

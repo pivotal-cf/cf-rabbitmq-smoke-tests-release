@@ -18,6 +18,8 @@ properties:
     description: 'Password of the admin user'
   cf.org:
     description: Pre-existing CF organization to be used by the smoke tests errand
+  cf.space:
+    description: Pre-existing CF space to be used by the smoke tests errand
   cf.service_offering_name:
     description: CF Service Offering name
   cf.plans:

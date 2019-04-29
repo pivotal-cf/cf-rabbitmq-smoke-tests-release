@@ -23,6 +23,7 @@ instance_groups:
         name: ((product-name))
       smoke_tests:
         org: system
+        space: system
   - name: on-demand-broker-smoke-tests
     release: cf-rabbitmq-smoke-tests
     properties:

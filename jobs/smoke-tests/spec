@@ -29,10 +29,10 @@ properties:
 
   smoke_tests.org:
     description: Pre-existing CF organization to be used by the smoke tests errand
-    default: ""
+    default: "system"
   smoke_tests.space:
     description: Pre-existing CF space to be used by the smoke tests errand
-    default: ""
+    default: "system"
   smoke_tests.apps_domain:
     description: 'App domain for Cloud Foundry. Defaults to cf.domain.'
   smoke_tests.timeout_scale:

@@ -24,8 +24,16 @@ properties:
     description: 'Full URL of Cloud Foundry API'
   cf.admin_username:
     description: 'Username of the admin user'
+    default: ''
   cf.admin_password:
     description: 'Password of the admin user'
+    default: ''
+  cf.admin_client:
+    description: 'Admin client to use in the smoke tests'
+    default: ''
+  cf.admin_client_secret:
+    description: 'Secret of the admin client to use in the smoke tests'
+    default: ''
 
   smoke_tests.org:
     description: Pre-existing CF organization to be used by the smoke tests errand

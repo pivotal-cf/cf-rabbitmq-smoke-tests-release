@@ -9,6 +9,8 @@ tar xzf cf-rabbitmq-smoke-tests-ginkgo/tail-v1.0.0.tar.gz --strip-components=1 -
 export GOPATH="${BOSH_INSTALL_TARGET}"
 export PATH="${PATH}:/var/vcap/packages/cf-rabbitmq-smoke-tests-golang/bin"
 
+export GOCACHE=$PWD/cache
+
 go install -v github.com/onsi/ginkgo/ginkgo
 
 rm -rf "${BOSH_INSTALL_TARGET}/src"

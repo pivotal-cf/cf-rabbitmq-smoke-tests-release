@@ -9,6 +9,8 @@ export GOPATH=/var/vcap/packages/cf-rabbitmq-smoke-tests
 export PATH=/var/vcap/packages/cf-cli-6-linux/bin:/var/vcap/packages/cf-rabbitmq-smoke-tests-ginkgo/bin:$GOROOT/bin:$PATH
 export PACKAGE_DIR=${GOPATH}/src/rabbitmq-smoke-tests
 
+export GOCACHE=$PWD/cache
+
 export CONFIG_PATH=/var/vcap/jobs/smoke-tests/config.json
 
 export CF_DIAL_TIMEOUT=11

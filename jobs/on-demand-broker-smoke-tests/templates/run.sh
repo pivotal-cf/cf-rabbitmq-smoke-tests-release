@@ -5,6 +5,8 @@ export GOROOT=$(readlink -nf /var/vcap/packages/cf-rabbitmq-smoke-tests-golang)
 export GOPATH=/var/vcap/packages/cf-rabbitmq-smoke-tests
 export PATH=/var/vcap/packages/cf-cli-6-linux/bin:/var/vcap/packages/cf-rabbitmq-smoke-tests-ginkgo/bin:$GOROOT/bin:$PATH
 
+export GOCACHE=$PWD/cache
+
 export PACKAGE_DIR=${GOPATH}/src/rabbitmq-smoke-tests
 
 export CF_DIAL_TIMEOUT=11

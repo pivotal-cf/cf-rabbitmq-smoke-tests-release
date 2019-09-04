@@ -20,13 +20,14 @@ var _ = Describe("Smoke tests", func() {
 		helper.DeleteApp(appName)
 	})
 
-	smokeTestForPlan := func(planName string) func() {
+	smokeTestForPlan := func(planName string, createServiceWithTLS bool) func() {
 		return func() {
 			serviceName := fmt.Sprintf("rmq-smoke-test-instance-%s", uuid.New()[:18])
 
-			if useTLS && testConfig.ServiceOffering == "p.rabbitmq" && testConfig.BindingWithDNS {
+			if testConfig.ServiceOffering == "p.rabbitmq" && testConfig.BindingWithDNS {
 				By("creating the service instance with TLS enabled")
-				helper.CreateService(testConfig.ServiceOffering, planName, serviceName, `{"tls": true}`)
+				tlsString := fmt.Sprintf(`{"tls": %v}`, createServiceWithTLS)
+				helper.CreateService(testConfig.ServiceOffering, planName, serviceName, tlsString)
 			} else {
 				By("creating the service instance")
 				helper.CreateService(testConfig.ServiceOffering, planName, serviceName, "")
@@ -37,7 +38,7 @@ var _ = Describe("Smoke tests", func() {
 				helper.DeleteService(serviceName)
 			}()
 
-			if useTLS && testConfig.ServiceOffering == "p.rabbitmq" && !testConfig.BindingWithDNS {
+			if createServiceWithTLS && testConfig.ServiceOffering == "p.rabbitmq" && !testConfig.BindingWithDNS {
 				By("updating the service to enable TLS")
 				tlsConfig := helper.TLSConfigUsingIPs(serviceName)
 				helper.UpdateService(serviceName, tlsConfig)
@@ -61,8 +62,28 @@ var _ = Describe("Smoke tests", func() {
 		}
 	}
 
-	for _, plan := range testConfig.TestPlans {
-		It(fmt.Sprintf("pushes an app, sends, and reads a message from RabbitMQ: plan '%s'", plan.Name),
-			smokeTestForPlan(plan.Name))
+	switch testConfig.TLSSupport {
+	case "disabled":
+		for _, plan := range testConfig.TestPlans {
+			It(fmt.Sprintf("pushes an app, sends, and reads a message from RabbitMQ: plan '%s'", plan.Name),
+				smokeTestForPlan(plan.Name, false))
+		}
+	case "optional":
+		for _, plan := range testConfig.TestPlans {
+			It(fmt.Sprintf("pushes an app, sends, and reads a message from RabbitMQ: plan '%s'", plan.Name),
+				smokeTestForPlan(plan.Name, false))
+			It(fmt.Sprintf("pushes an app, sends, and reads a message from RabbitMQ over TLS: plan '%s'", plan.Name),
+				smokeTestForPlan(plan.Name, true))
+		}
+	case "enforced":
+		for _, plan := range testConfig.TestPlans {
+			It(fmt.Sprintf("pushes an app, sends, and reads a message from RabbitMQ over TLS: plan '%s'", plan.Name),
+				smokeTestForPlan(plan.Name, true))
+		}
+	default:
+		for _, plan := range testConfig.TestPlans {
+			It(fmt.Sprintf("pushes an app, sends, and reads a message from RabbitMQ: plan '%s'", plan.Name),
+				smokeTestForPlan(plan.Name, false))
+		}
 	}
 })

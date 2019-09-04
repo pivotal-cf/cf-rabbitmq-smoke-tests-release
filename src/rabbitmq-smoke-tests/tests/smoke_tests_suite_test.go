@@ -24,7 +24,6 @@ const (
 var (
 	configPath = os.Getenv("CONFIG_PATH")
 	testConfig = loadTestConfig(configPath)
-	useTLS     = len(testConfig.TLSSupport) > 0 && testConfig.TLSSupport != "disabled"
 	wfh        *workflowhelpers.ReproducibleTestSuiteSetup
 )
 

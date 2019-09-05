@@ -2,41 +2,23 @@ package helper
 
 import (
 	"encoding/json"
-	"regexp"
 
 	. "github.com/onsi/gomega"
 )
 
 const keyName = "service-key-for-tls"
 
-var serviceKeyHeader = regexp.MustCompile(`^\s*Getting key .*`)
-
 func TLSConfigUsingIPs(serviceName string) string {
 	key := generateServiceKeyOutput(serviceName)
-	return readTLSConfigFromServiceKey(key)
+	Expect(key.Hostnames).ToNot(HaveLen(0))
+
+	return generateTLSConfigFromHostnames(key.Hostnames)
 }
 
-func generateServiceKeyOutput(serviceName string) []byte {
+func generateServiceKeyOutput(serviceName string) ServiceKey {
 	CreateServiceKey(serviceName, keyName)
 	key := GetServiceKey(serviceName, keyName)
-	DeleteServiceKey(serviceName, keyName)
 	return key
-}
-
-func readTLSConfigFromServiceKey(serviceKey []byte) string {
-	chopped := serviceKeyHeader.ReplaceAllLiteral(serviceKey, []byte{})
-	hostnames := parseServiceKey(chopped)
-	return generateTLSConfigFromHostnames(hostnames)
-}
-
-func parseServiceKey(chopped []byte) []string {
-	var serviceKeyData struct {
-		Hostnames []string `json:"hostnames"`
-	}
-	err := json.Unmarshal(chopped, &serviceKeyData)
-	Expect(err).NotTo(HaveOccurred())
-	Expect(serviceKeyData.Hostnames).ToNot(HaveLen(0))
-	return serviceKeyData.Hostnames
 }
 
 func generateTLSConfigFromHostnames(hostnames []string) string {

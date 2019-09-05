@@ -121,20 +121,6 @@ func DeleteService(serviceName string) {
 	AwaitServiceDeletion(serviceName)
 }
 
-func CreateServiceKey(serviceName, keyName string) {
-	Expect(Cf("create-service-key", serviceName, keyName)).To(gexec.Exit(0))
-}
-
-func DeleteServiceKey(serviceName, keyName string) {
-	Expect(Cf("delete-service-key", "-f", serviceName, keyName)).To(gexec.Exit(0))
-}
-
-func GetServiceKey(serviceName, keyName string) []byte {
-	session := Cf("service-key", serviceName, keyName)
-	Expect(session).To(gexec.Exit(0))
-	return session.Buffer().Contents()
-}
-
 func findURL(cliOutput string) string {
 	for _, line := range strings.Split(cliOutput, "\n") {
 		if strings.HasPrefix(line, "routes:") {

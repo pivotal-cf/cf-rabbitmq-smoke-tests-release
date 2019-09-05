@@ -1,7 +1,9 @@
 package smoke_tests
 
 import (
+	"crypto/tls"
 	"fmt"
+	"net/http"
 
 	"rabbitmq-smoke-tests/tests/helper"
 
@@ -23,6 +25,7 @@ var _ = Describe("Smoke tests", func() {
 	smokeTestForPlan := func(planName string, createServiceWithTLS bool) func() {
 		return func() {
 			serviceName := fmt.Sprintf("rmq-smoke-test-instance-%s", uuid.New()[:18])
+			serviceKeyName := fmt.Sprintf("%s-key", serviceName)
 
 			if testConfig.ServiceOffering == "p.rabbitmq" && testConfig.BindingWithDNS {
 				By("creating the service instance with TLS enabled")
@@ -33,7 +36,11 @@ var _ = Describe("Smoke tests", func() {
 				helper.CreateService(testConfig.ServiceOffering, planName, serviceName, "")
 			}
 
+			helper.CreateServiceKey(serviceName, serviceKeyName)
+
 			defer func() {
+				By("deleting the service key")
+				helper.DeleteServiceKey(serviceName, serviceKeyName)
 				By("deleting the service instance")
 				helper.DeleteService(serviceName)
 			}()
@@ -59,6 +66,16 @@ var _ = Describe("Smoke tests", func() {
 			helper.SendMessage(appURL, queue, "bar")
 			Expect(helper.ReceiveMessage(appURL, queue)).To(Equal("foo"))
 			Expect(helper.ReceiveMessage(appURL, queue)).To(Equal("bar"))
+
+			By("accessing the management dashboard")
+			serviceKey := helper.GetServiceKey(serviceName, serviceKeyName)
+
+			client := http.Client{Transport: &http.Transport{TLSClientConfig: &tls.Config{InsecureSkipVerify: true}}}
+			resp, err := client.Get(serviceKey.DashboardUrl)
+			Expect(err).NotTo(HaveOccurred())
+
+			defer resp.Body.Close()
+			Expect(resp.StatusCode).To(Equal(http.StatusOK))
 		}
 	}
 

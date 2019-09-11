@@ -17,6 +17,7 @@ func TLSConfigUsingIPs(serviceName string) string {
 
 func generateServiceKeyOutput(serviceName string) ServiceKey {
 	CreateServiceKey(serviceName, keyName)
+	defer DeleteServiceKey(serviceName, keyName)
 	key := GetServiceKey(serviceName, keyName)
 	return key
 }

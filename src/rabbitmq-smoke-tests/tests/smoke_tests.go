@@ -55,7 +55,7 @@ var _ = Describe("Smoke tests", func() {
 			}()
 
 			By("pushing and binding an app")
-			appURL := helper.PushAndBindApp(appName, serviceName, appPath)
+			appURL := helper.PushAndBindApp(appName, serviceName, appPath, testConfig.AppsDomain)
 
 			By("sending and receiving rabbit messages")
 			queue := fmt.Sprintf("%s-queue", appName)

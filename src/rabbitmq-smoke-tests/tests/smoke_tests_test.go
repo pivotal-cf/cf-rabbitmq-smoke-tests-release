@@ -1,7 +1,9 @@
 package smoke_tests
 
 import (
+	"crypto/tls"
 	"fmt"
+	"net/http"
 
 	"rabbitmq-smoke-tests/tests/helper"
 
@@ -65,15 +67,15 @@ var _ = Describe("Smoke tests", func() {
 			Expect(helper.ReceiveMessage(appURL, queue)).To(Equal("foo"))
 			Expect(helper.ReceiveMessage(appURL, queue)).To(Equal("bar"))
 
-			// By("accessing the management dashboard")
-			// serviceKey := helper.GetServiceKey(serviceName, serviceKeyName)
-			//
-			// client := http.Client{Transport: &http.Transport{TLSClientConfig: &tls.Config{InsecureSkipVerify: true}}}
-			// resp, err := client.Get(serviceKey.DashboardUrl)
-			// Expect(err).NotTo(HaveOccurred())
-			//
-			// defer resp.Body.Close()
-			// Expect(resp.StatusCode).To(Equal(http.StatusOK))
+			By("accessing the management dashboard")
+			serviceKey := helper.GetServiceKey(serviceName, serviceKeyName)
+
+			client := http.Client{Transport: &http.Transport{TLSClientConfig: &tls.Config{InsecureSkipVerify: true}}}
+			resp, err := client.Get(serviceKey.DashboardUrl)
+			Expect(err).NotTo(HaveOccurred())
+
+			defer resp.Body.Close()
+			Expect(resp.StatusCode).To(Equal(http.StatusOK))
 		}
 	}
 

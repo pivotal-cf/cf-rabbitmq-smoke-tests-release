@@ -69,6 +69,8 @@ builds:
     version: 22.0.0
   d76fa9ac-a7e0-4501-7209-42e2f09c61f6:
     version: 25.0.0
+  db998e94-6c71-4fd0-478c-9da4dc8d4a39:
+    version: 39.0.0
   dcc6b966-f08b-4da1-5b8b-bff957afbbf6:
     version: 27.0.0
   f5dcfb2b-4c16-4ed3-6357-073d1ea512dd:

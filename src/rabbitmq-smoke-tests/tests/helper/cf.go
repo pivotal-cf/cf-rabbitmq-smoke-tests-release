@@ -92,12 +92,6 @@ func PrintAppLogs(appName string) {
 	Expect(Cf("logs", appName, "--recent")).To(gexec.Exit(0))
 }
 
-func RetrieveMetrics(serviceName string) string {
-	session := Cf("tail", "--lines", "1", serviceName)
-	Expect(session).To(gexec.Exit(0))
-	return string(session.Buffer().Contents())
-}
-
 func CreateService(serviceOffering, servicePlan, serviceName, params string) {
 	if params != "" {
 		Expect(Cf("create-service", serviceOffering, servicePlan, serviceName, "-c", params)).To(gexec.Exit(0))

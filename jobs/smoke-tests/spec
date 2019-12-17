@@ -38,12 +38,17 @@ properties:
   smoke_tests.org:
     description: Pre-existing CF organization to be used by the smoke tests errand
     default: ""
+  smoke_tests.space:
+    description: Pre-existing CF space to be used by the smoke tests errand
+    default: ""
+  smoke_tests.use_existing_space:
+    description: If true: smoke-tests will deploy app to the space specified by 'smoke_tests.space'. Otherwise, a new temp space is created and deleted.
+    default: false
   smoke_tests.apps_domain:
     description: 'App domain for Cloud Foundry. Defaults to cf.domain.'
   smoke_tests.timeout_scale:
     description: Timeout scale to be used by the smoke tests errand
     default: 30.0
-
   broker.name:
     description: Service name displayed in the catalog metadata
     default: p-rabbitmq
@@ -51,4 +56,3 @@ properties:
   tls_support:
     description: TLS configuration for  service instances (disabled, optional or enforced)
     default: disabled
-

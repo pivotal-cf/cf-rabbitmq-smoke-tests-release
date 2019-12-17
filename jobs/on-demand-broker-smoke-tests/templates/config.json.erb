@@ -12,7 +12,8 @@ conf = {
   existing_client_secret: p("cf.admin_client_secret"),
 
   use_existing_user: false,
-  use_existing_space: false,
+  existing_space: p("cf.space"),
+  use_existing_space: p("cf.use_existing_space"),
   use_existing_organization: true,
   existing_organization: p("cf.org"),
   name_prefix: "rmq-smoke-tests",

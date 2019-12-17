@@ -26,6 +26,13 @@ properties:
     default: ''
   cf.org:
     description: Pre-existing CF organization to be used by the smoke tests errand
+    default: ''
+  cf.space:
+    description: Pre-existing CF space to be used by the smoke tests errand
+    default: ''
+  cf.use_existing_space:
+    description: If true: smoke-tests will deploy app to the space specified by 'cf.space'. Otherwise, a new temp space is created and deleted.
+    default: false
   cf.service_offering_name:
     description: CF Service Offering name
   cf.plans:

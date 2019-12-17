@@ -42,7 +42,8 @@ app_domain.nil? and app_domain = ""
 
   "existing_organization":            "<%= p('smoke_tests.org') %>",
   "use_existing_organization": true,
-  "use_existing_space": false,
+  "existing_space":                   "<%= p('smoke_tests.space') %>",
+  "use_existing_space":               "<%= p('smoke_tests.use_existing_space') %>",
   "use_existing_user": false,
   "service_offering":                 "<%= p('broker.name') %>",
   "tls_support":                      "<%= p('tls_support') %>",
@@ -52,4 +53,3 @@ app_domain.nil? and app_domain = ""
     "name":"standard"
   }]
 }
-

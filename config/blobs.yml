@@ -1,9 +1,9 @@
 ---
 # this comment prevents git conflicts
-cf-rabbitmq-smoke-tests-ginkgo/ginkgo-v1.10.3.tar.gz:
-  size: 135716
-  object_id: 7063c549-7a32-4840-59e7-1d7d4bed3fb5
-  sha: sha256:e0eabdddb99ec380cb8fd492a8bc7557fb5d33832c3ba047e67c0e658f1158a7
+cf-rabbitmq-smoke-tests-ginkgo/ginkgo-v1.11.0.tar.gz:
+  size: 136779
+  object_id: c9571a74-45a6-4e57-581c-eb72fd88577c
+  sha: sha256:f47b16e1b5f2ead3f61891c8d62825553f6520399ebe260afb35d3cb87b49bc1
 # this comment prevents git conflicts
 cf-rabbitmq-smoke-tests-ginkgo/tail-v1.0.0.tar.gz:
   size: 37816

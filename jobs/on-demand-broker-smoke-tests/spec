@@ -26,6 +26,9 @@ properties:
     default: ''
   cf.org:
     description: Pre-existing CF organization to be used by the smoke tests errand
+  cf.space:
+    description: Pre-existing CF space to be used by the smoke tests errand. If empty, a new temporary CF space will be created and deleted.
+    default: ''
   cf.service_offering_name:
     description: CF Service Offering name
   cf.plans:

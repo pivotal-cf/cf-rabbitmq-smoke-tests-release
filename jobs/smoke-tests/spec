@@ -38,6 +38,9 @@ properties:
   smoke_tests.org:
     description: Pre-existing CF organization to be used by the smoke tests errand
     default: ""
+  smoke_tests.space:
+    description: Pre-existing CF space to be used by the smoke tests errand. If empty, a new temporary CF space will be created and deleted.
+    default: ""
   smoke_tests.apps_domain:
     description: 'App domain for Cloud Foundry. Defaults to cf.domain.'
   smoke_tests.timeout_scale:
@@ -51,4 +54,3 @@ properties:
   tls_support:
     description: TLS configuration for  service instances (disabled, optional or enforced)
     default: disabled
-

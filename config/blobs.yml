@@ -10,7 +10,7 @@ cf-rabbitmq-smoke-tests-ginkgo/tail-v1.0.0.tar.gz:
   object_id: a059741c-5ea7-43bc-471e-646aad7e6471
   sha: 1a73f96f30b133ba6255c33490fb4b31ac6c0326
 # this comment prevents git conflicts
-cf-rabbitmq-smoke-tests-golang/go1.14.2.linux-amd64.tar.gz:
-  size: 123658438
-  object_id: e84aae10-d675-4458-6c87-9a6c84a184ff
-  sha: sha256:6272d6e940ecb71ea5636ddb5fab3933e087c1356173c61f4a803895e947ebb3
+cf-rabbitmq-smoke-tests-golang/go1.14.3.linux-amd64.tar.gz:
+  size: 123703837
+  object_id: 2c55ed68-3d74-4112-7241-f6005dc76e9c
+  sha: sha256:1c39eac4ae95781b066c144c58e45d6859652247f7515f0d2cba7be7d57d2226

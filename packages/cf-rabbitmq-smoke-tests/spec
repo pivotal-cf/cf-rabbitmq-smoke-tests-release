@@ -1,4 +1,8 @@
 ---
 name: cf-rabbitmq-smoke-tests
+
+dependencies: 
+- cf-rabbitmq-smoke-tests-golang
+
 files:
 - rabbitmq-smoke-tests/**/*

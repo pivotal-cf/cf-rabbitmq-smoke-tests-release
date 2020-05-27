@@ -1,0 +1,13 @@
+---
+name: cf-rabbitmq-smoke-tests-ginkgo
+metadata:
+  version:
+    ginkgo: '1.12.1'
+    tail: '1.4.4'
+
+dependencies:
+- cf-rabbitmq-smoke-tests-golang
+
+files:
+- cf-rabbitmq-smoke-tests-ginkgo/ginkgo-v1.12.1.tar.gz
+- cf-rabbitmq-smoke-tests-ginkgo/tail-v1.4.4.tar.gz

@@ -2,6 +2,7 @@
 name: on-demand-broker-smoke-tests
 packages:
 - cf-rabbitmq-smoke-tests-golang
+- cf-rabbitmq-smoke-tests-ginkgo
 - cf-rabbitmq-smoke-tests
 
 templates:

@@ -24,7 +24,9 @@ conf = {
   tls_support: p("tls_support"),
   binding_with_dns: p("binding_with_dns")
 }
-
+if p('smoke_tests_apps_domain') != ""
+  conf['apps_domain']= p('smoke_tests_apps_domain')
+end
 %>
 
 <%= JSON.dump(conf) %>

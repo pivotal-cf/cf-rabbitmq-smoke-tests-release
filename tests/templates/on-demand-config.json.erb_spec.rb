@@ -27,6 +27,34 @@ module Bosh::Template::Test
 
     let(:rendered) { template.render(merged_manifest_properties) }
 
+    describe 'apps_domain' do
+      context 'when smoke_tests_apps_domain is present' do
+        it('is set to smoke_tests_apps_domain') do
+          merged_manifest_properties['smoke_tests_apps_domain'] = 'apps.example.domain.io'
+
+
+          expect(rendered).to include_json(
+            apps_domain: 'apps.example.domain.io'
+          )
+        end
+      end
+
+      context 'when smoke_tests_apps_domain is empty' do
+        it('is not set') do
+          merged_manifest_properties['smoke_tests_apps_domain'] = ''
+
+          expect(rendered).to_not include('apps_domain')
+        end
+      end
+
+      context 'when smoke_tests_apps_domain is absent' do
+        it('is set to cf api_url') do
+
+          expect(rendered).to_not include('apps_domain')
+        end
+      end
+    end
+
     describe 'config.json' do
       it 'should have all necessary properties' do
         expect(rendered).to include_json(

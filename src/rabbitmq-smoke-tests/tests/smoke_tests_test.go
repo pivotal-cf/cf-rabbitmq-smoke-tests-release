@@ -27,7 +27,7 @@ var _ = Describe("Smoke tests", func() {
 			serviceName := fmt.Sprintf("rmq-smoke-test-instance-%s", uuid.New()[:18])
 			serviceKeyName := fmt.Sprintf("%s-key", serviceName)
 
-			if testConfig.ServiceOffering == "p.rabbitmq" && testConfig.BindingWithDNS {
+			if testConfig.ServiceOffering == "p.rabbitmq" {
 				By("creating the service instance with TLS enabled")
 				tlsString := fmt.Sprintf(`{"tls": %v}`, createServiceWithTLS)
 				helper.CreateService(testConfig.ServiceOffering, planName, serviceName, tlsString)
@@ -44,12 +44,6 @@ var _ = Describe("Smoke tests", func() {
 				By("deleting the service instance")
 				helper.DeleteService(serviceName)
 			}()
-
-			if createServiceWithTLS && testConfig.ServiceOffering == "p.rabbitmq" && !testConfig.BindingWithDNS {
-				By("updating the service to enable TLS")
-				tlsConfig := helper.TLSConfigUsingIPs(serviceName)
-				helper.UpdateService(serviceName, tlsConfig)
-			}
 
 			defer func() {
 				By("unbinding the app")

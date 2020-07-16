@@ -78,7 +78,6 @@ type TestConfig struct {
 	TestPlans       []TestPlan `json:"plans"`
 	ServiceOffering string     `json:"service_offering"`
 	TLSSupport      string     `json:"tls_support"`
-	BindingWithDNS  bool       `json:"binding_with_dns"`
 }
 
 type TestPlan struct {

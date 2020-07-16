@@ -79,8 +79,7 @@ module Bosh::Template::Test
           plans: [{
             'name': 'single-node'
           }],
-          tls_support: 'disabled',
-          binding_with_dns: false
+          tls_support: 'disabled'
         )
       end
 

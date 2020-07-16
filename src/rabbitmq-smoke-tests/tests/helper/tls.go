@@ -8,13 +8,6 @@ import (
 
 const keyName = "service-key-for-tls"
 
-func TLSConfigUsingIPs(serviceName string) string {
-	key := generateServiceKeyOutput(serviceName)
-	Expect(key.Hostnames).ToNot(HaveLen(0))
-
-	return generateTLSConfigFromHostnames(key.Hostnames)
-}
-
 func generateServiceKeyOutput(serviceName string) ServiceKey {
 	CreateServiceKey(serviceName, keyName)
 	defer DeleteServiceKey(serviceName, keyName)

@@ -22,7 +22,6 @@ conf = {
   service_offering: p("cf.service_offering_name"),
   plans: p("cf.plans").reject { |plan| plan.nil? },
   tls_support: p("tls_support"),
-  binding_with_dns: p("binding_with_dns")
 }
 if p('smoke_tests_apps_domain') != ""
   conf['apps_domain']= p('smoke_tests_apps_domain')

@@ -121,6 +121,8 @@ builds:
     version: 45.0.0
   f5dcfb2b-4c16-4ed3-6357-073d1ea512dd:
     version: 3.0.0
+  fa5262d0-0daa-4ad0-44c1-4d86fcf96158:
+    version: 64.0.0
   fc5c4843-f6ce-428a-5e27-4419f9eedf05:
     version: 28.0.0
   ff1a52eb-32f7-43ac-6254-0a62b1025fcc:

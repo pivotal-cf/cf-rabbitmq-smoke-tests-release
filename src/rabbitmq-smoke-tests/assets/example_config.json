@@ -2,6 +2,7 @@
   "api":  "https://api.bosh-lite.com",
   "skip_ssl_validation":true,
   "tls_support": "disabled",
+  "oauth_enforced": false,
   "admin_user":"admin",
   "admin_password":"admin",
   "existing_organization": "system",

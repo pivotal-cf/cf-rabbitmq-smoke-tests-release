@@ -78,6 +78,7 @@ type TestConfig struct {
 	TestPlans       []TestPlan `json:"plans"`
 	ServiceOffering string     `json:"service_offering"`
 	TLSSupport      string     `json:"tls_support"`
+	OAuthEnforced   bool       `json:"oauth_enforced"`
 }
 
 type TestPlan struct {

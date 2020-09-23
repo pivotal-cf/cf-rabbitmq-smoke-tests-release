@@ -53,13 +53,16 @@ var _ = Describe("Smoke tests", func() {
 			By("pushing and binding an app")
 			appURL := helper.PushAndBindApp(appName, serviceName, appPath, testConfig.AppsDomain)
 
-			By("sending and receiving rabbit messages")
-			queue := fmt.Sprintf("%s-queue", appName)
+			// skip publishing and consuming msgs because additional setup is required when oauth is enforced
+			if !testConfig.OAuthEnforced {
+				By("sending and receiving rabbit messages")
+				queue := fmt.Sprintf("%s-queue", appName)
 
-			helper.SendMessage(appURL, queue, "foo")
-			helper.SendMessage(appURL, queue, "bar")
-			Expect(helper.ReceiveMessage(appURL, queue)).To(Equal("foo"))
-			Expect(helper.ReceiveMessage(appURL, queue)).To(Equal("bar"))
+				helper.SendMessage(appURL, queue, "foo")
+				helper.SendMessage(appURL, queue, "bar")
+				Expect(helper.ReceiveMessage(appURL, queue)).To(Equal("foo"))
+				Expect(helper.ReceiveMessage(appURL, queue)).To(Equal("bar"))
+			}
 
 			By("accessing the management dashboard")
 			serviceKey := helper.GetServiceKey(serviceName, serviceKeyName)

@@ -1,9 +1,9 @@
-#!/bin/bash
+#!/usr/bin/env bash
 set -e
 [ -z "${DEBUG:-""}" ] || set -x
 
 usage() {
-  echo "Usage: `basename $0` [previous]"
+  echo "Usage: $(basename "$0") [previous]"
   echo
   echo "  PREVIOUS defaults to the last final release on GitHub"
   exit 1

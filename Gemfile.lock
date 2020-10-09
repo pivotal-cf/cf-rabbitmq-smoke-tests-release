@@ -3,7 +3,21 @@ GEM
   specs:
     bosh-template (2.2.1)
       semi_semantic (~> 1.2.0)
+    diff-lcs (1.4.4)
+    rspec (3.9.0)
+      rspec-core (~> 3.9.0)
+      rspec-expectations (~> 3.9.0)
+      rspec-mocks (~> 3.9.0)
+    rspec-core (3.9.3)
+      rspec-support (~> 3.9.3)
+    rspec-expectations (3.9.2)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.9.0)
     rspec-json_expectations (2.2.0)
+    rspec-mocks (3.9.1)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.9.0)
+    rspec-support (3.9.3)
     semi_semantic (1.2.0)
 
 PLATFORMS
@@ -11,7 +25,8 @@ PLATFORMS
 
 DEPENDENCIES
   bosh-template
+  rspec
   rspec-json_expectations
 
 BUNDLED WITH
-   2.0.1
+   2.1.4

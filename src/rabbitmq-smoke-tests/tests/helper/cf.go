@@ -30,12 +30,12 @@ func CfWithTimeout(timeout time.Duration, args ...string) *gexec.Session {
 
 func Cf(args ...string) *gexec.Session {
 	var s *gexec.Session
-	for i := 0; i < RETRY_LIMIT; i++ {
+	for i := 0; i <= RETRY_LIMIT; i++ {
 		s = CfWithTimeout(COMMAND_TIMEOUT, args...)
 		if s.ExitCode() == 0 {
 			return s
 		}
-		fmt.Printf("Retrying: %d out of %d", i, RETRY_LIMIT)
+		fmt.Printf("Retried: %d out of %d", i, RETRY_LIMIT)
 		time.Sleep(5 * time.Second)
 	}
 	return s

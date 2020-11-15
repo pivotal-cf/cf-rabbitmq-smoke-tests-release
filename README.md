@@ -18,4 +18,3 @@ $ bosh create-release #--force --tarball=cf-rabbitmq-smoke-tests-release-VERSION
 
 ## Notes
 - Change directory to `src/rabbitmq-smoke-tests` and run `make` to list all options
-

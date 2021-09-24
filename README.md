@@ -1,6 +1,10 @@
 # cf-rabbitmq-smoke-tests-release
 Smoke tests for the CF RabbitMQ Service
 
+## Contributing
+
+Even though the default branch is `release`, you should push changes to `master`. [The `release` branch is the default so that bosh.io can find our releases](https://github.com/bosh-io/releases#how-does-boshio-find-my-release).
+
 ## Run tests
 In order to run the tests for development:
 - Change directory to `src/rabbitmq-smoke-tests`

@@ -7,9 +7,9 @@ import (
 
 	"rabbitmq-smoke-tests/tests/helper"
 
+	"github.com/google/uuid"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
-	"github.com/pborman/uuid"
 )
 
 var _ = Describe("Smoke tests", func() {
@@ -24,7 +24,7 @@ var _ = Describe("Smoke tests", func() {
 
 	smokeTestForPlan := func(planName string, createServiceWithTLS bool) func() {
 		return func() {
-			serviceName := fmt.Sprintf("rmq-smoke-test-instance-%s", uuid.New()[:18])
+			serviceName := fmt.Sprintf("rmq-smoke-test-instance-%s", uuid.NewString())
 			serviceKeyName := fmt.Sprintf("%s-key", serviceName)
 
 			if testConfig.ServiceOffering == "p.rabbitmq" {

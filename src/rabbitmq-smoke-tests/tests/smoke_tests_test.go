@@ -24,7 +24,7 @@ var _ = Describe("Smoke tests", func() {
 
 	smokeTestForPlan := func(planName string, createServiceWithTLS bool) func() {
 		return func() {
-			serviceName := fmt.Sprintf("rmq-smoke-test-instance-%s", uuid.NewString())
+			serviceName := fmt.Sprintf("rmq-smoke-test-instance-%s", uuid.NewString()[:13])
 			serviceKeyName := fmt.Sprintf("%s-key", serviceName)
 
 			if testConfig.ServiceOffering == "p.rabbitmq" {

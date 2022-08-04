@@ -1,6 +1,6 @@
 ---
 # this comment prevents git conflicts
-cf-rabbitmq-smoke-tests-golang/go1.18.5.linux-amd64.tar.gz:
-  size: 141855946
-  object_id: b628d599-1f6a-43cf-46f6-ecc058d8b6ed
-  sha: sha256:9e5de37f9c49942c601b191ac5fba404b868bfc21d446d6960acc12283d6e5f2
+cf-rabbitmq-smoke-tests-golang/go1.19.linux-amd64.tar.gz:
+  size: 148796421
+  object_id: 68b56a64-fecb-4b15-6096-8bdbbbc5ac60
+  sha: sha256:464b6b66591f6cf055bc5df90a9750bf5fbc9d038722bb84a9d56a2bea974be6

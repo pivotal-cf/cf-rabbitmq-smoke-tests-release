@@ -59,15 +59,15 @@ func CreateAndBindSecurityGroup(securityGroupName, orgName, spaceName string) {
 	Expect(err).NotTo(HaveOccurred(), `{"FailReason": "Failed to encode security groups"}`)
 
 	Expect(Cf("create-security-group", securityGroupName, sgFile.Name())).To(gexec.Exit(0))
-	Expect(Cf("bind-security-group", securityGroupName, orgName, spaceName)).To(gexec.Exit(0))
+	Expect(Cf("bind-security-group", securityGroupName, orgName, "--space", spaceName)).To(gexec.Exit(0))
 }
 
 func DeleteSecurityGroup(securityGroupName string) {
 	Expect(Cf("delete-security-group", securityGroupName, "-f")).To(gexec.Exit(0))
 }
 
-func PushAndBindApp(appName, serviceName, testAppPath, appsDomain string) string {
-	Expect(Cf("push", "-f", filepath.Join(testAppPath, "manifest.yml"), "-d", appsDomain, "--no-start", "--random-route", appName)).To(gexec.Exit(0))
+func PushAndBindApp(appName, serviceName, testAppPath string) string {
+	Expect(Cf("push", "-f", filepath.Join(testAppPath, "manifest.yml"), "--no-start", "--random-route", appName)).To(gexec.Exit(0))
 	Expect(Cf("bind-service", appName, serviceName)).To(gexec.Exit(0))
 	Expect(Cf("start", appName)).To(gexec.Exit(0))
 	return LookupAppURL(appName)

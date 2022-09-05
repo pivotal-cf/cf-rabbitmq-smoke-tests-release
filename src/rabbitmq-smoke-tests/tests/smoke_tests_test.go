@@ -51,7 +51,7 @@ var _ = Describe("Smoke tests", func() {
 			}()
 
 			By("pushing and binding an app")
-			appURL := helper.PushAndBindApp(appName, serviceName, appPath, testConfig.AppsDomain)
+			appURL := helper.PushAndBindApp(appName, serviceName, appPath)
 
 			// skip publishing and consuming msgs because additional setup is required when oauth is enforced
 			if !testConfig.OAuthEnforced {

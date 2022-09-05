@@ -18,7 +18,7 @@ consumes:
 
 properties:
   cf.domain:
-    description: 'Sys domain for Cloud Foundry'
+    description: 'Deprecated'
   cf.api_url:
     description: 'Full URL of Cloud Foundry API'
   cf.admin_username:
@@ -41,7 +41,7 @@ properties:
     description: Pre-existing CF space to be used by the smoke tests errand. If empty, a new temporary CF space will be created and deleted.
     default: ""
   smoke_tests.apps_domain:
-    description: 'App domain for Cloud Foundry. Defaults to cf.domain.'
+    description: Deprecated
   smoke_tests.timeout_scale:
     description: Timeout scale to be used by the smoke tests errand
     default: 30.0

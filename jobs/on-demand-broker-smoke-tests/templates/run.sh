@@ -3,7 +3,7 @@ set -ex
 
 export GOROOT=$(readlink -nf /var/vcap/packages/cf-rabbitmq-smoke-tests-golang)
 export GOPATH=/var/vcap/packages/cf-rabbitmq-smoke-tests
-export PATH=/var/vcap/packages/cf-cli-6-linux/bin:$GOPATH/bin:$GOROOT/bin:$PATH
+export PATH=/var/vcap/packages/cf-cli-7-linux/bin:$GOPATH/bin:$GOROOT/bin:$PATH
 
 export GOCACHE=$PWD/cache
 

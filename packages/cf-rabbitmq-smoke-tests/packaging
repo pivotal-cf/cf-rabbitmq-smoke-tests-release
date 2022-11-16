@@ -14,5 +14,5 @@ export PATH="${PATH}:/var/vcap/packages/cf-rabbitmq-smoke-tests-golang/bin"
 export GOCACHE="${BOSH_INSTALL_TARGET}/cache"
 
 pushd $REPO_TARGET_DIR
-  go install -mod=vendor github.com/onsi/ginkgo/ginkgo
+  go install -mod=vendor github.com/onsi/ginkgo/v2/ginkgo
 popd

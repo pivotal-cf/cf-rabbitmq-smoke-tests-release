@@ -247,6 +247,8 @@ builds:
     version: 21.0.0
   ce30055b-70b5-46f3-7897-8a546abc441e:
     version: 102.0.0
+  d02ab75c-78d5-477d-7f09-835cefda832c:
+    version: 150.0.0
   d3235d68-3ef3-4ad7-5ffb-cd0e20d8eba2:
     version: 16.0.0
   d4a38508-1def-4e08-7deb-527c6bbb0d34:

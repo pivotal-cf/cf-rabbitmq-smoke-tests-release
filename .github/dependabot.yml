@@ -2,12 +2,11 @@ version: 2
 updates:
 - package-ecosystem: "bundler"
   directory: "/"
+  target-branch: "master"
   schedule:
     interval: "daily"
-  target-branch: "master"
 - package-ecosystem: "gomod"
   directory: "/src/rabbitmq-smoke-tests/"
-  vendor: true
   schedule:
     interval: "daily"
   target-branch: "master"

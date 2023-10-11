@@ -18,8 +18,8 @@ require (
 	github.com/google/pprof v0.0.0-20230906154834-20cde9067b3b // indirect
 	github.com/kr/pretty v0.3.1 // indirect
 	github.com/stretchr/testify v1.8.1 // indirect
-	golang.org/x/net v0.15.0 // indirect
-	golang.org/x/sys v0.12.0 // indirect
+	golang.org/x/net v0.17.0 // indirect
+	golang.org/x/sys v0.13.0 // indirect
 	golang.org/x/text v0.13.0 // indirect
 	golang.org/x/tools v0.13.0 // indirect
 	google.golang.org/protobuf v1.28.1 // indirect

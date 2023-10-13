@@ -46,6 +46,7 @@ func TestLifecycle(t *testing.T) {
 			helper.DeleteSecurityGroup(securityGroupName)
 		})
 
+		time.Sleep(5*time.Second) // Ensure service instance deletion does not block teardown
 		wfh.Teardown()
 	})
 

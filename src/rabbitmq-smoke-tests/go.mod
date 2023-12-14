@@ -6,7 +6,7 @@ toolchain go1.21.1
 
 require (
 	github.com/cloudfoundry/cf-test-helpers/v2 v2.8.0
-	github.com/google/uuid v1.4.0
+	github.com/google/uuid v1.5.0
 	github.com/onsi/ginkgo/v2 v2.13.2
 	github.com/onsi/gomega v1.30.0
 )

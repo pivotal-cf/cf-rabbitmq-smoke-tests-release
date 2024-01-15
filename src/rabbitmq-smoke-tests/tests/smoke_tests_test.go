@@ -14,18 +14,13 @@ import (
 
 var _ = Describe("Smoke tests", func() {
 
-	const appName = "rmq-smoke-tests-ruby"
 	const appPath = "../assets/rabbit-example-app"
-
-	AfterEach(func() {
-		helper.PrintAppLogs(appName)
-		helper.DeleteApp(appName)
-	})
 
 	smokeTestForPlan := func(planName string, createServiceWithTLS bool) func() {
 		return func() {
 			serviceName := fmt.Sprintf("rmq-smoke-test-instance-%s", uuid.NewString()[:13])
 			serviceKeyName := fmt.Sprintf("%s-key", serviceName)
+			appName := fmt.Sprintf("rmq-smoke-tests-ruby-%s", uuid.NewString()[:13])
 
 			if testConfig.ServiceOffering == "p.rabbitmq" {
 				By("creating the service instance with TLS enabled")
@@ -43,6 +38,9 @@ var _ = Describe("Smoke tests", func() {
 				helper.DeleteServiceKey(serviceName, serviceKeyName)
 				By("deleting the service instance")
 				helper.DeleteService(serviceName)
+				helper.PrintAppLogs(appName)
+				By("deleting the app")
+				helper.DeleteApp(appName)
 			}()
 
 			defer func() {

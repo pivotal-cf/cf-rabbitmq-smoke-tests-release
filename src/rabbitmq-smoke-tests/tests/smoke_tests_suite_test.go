@@ -38,13 +38,10 @@ func TestLifecycle(t *testing.T) {
 
 		return []byte{}
 	}, func([]byte) {
-		if wfh == nil {
-			wfh = workflowhelpers.NewTestSuiteSetup(&testConfig.Config)
-			wfh.Setup()
-		}
 	})
 
-	SynchronizedAfterSuite(func() {}, func() {
+	SynchronizedAfterSuite(func() {
+	}, func() {
 		workflowhelpers.AsUser(wfh.AdminUserContext(), 30*time.Second, func() {
 			helper.DeleteSecurityGroup(securityGroupName)
 		})

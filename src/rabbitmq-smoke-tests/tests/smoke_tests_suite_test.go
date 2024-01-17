@@ -44,14 +44,20 @@ func TestLifecycle(t *testing.T) {
 		}
 	})
 
-	SynchronizedAfterSuite(func() {}, func() {
-		workflowhelpers.AsUser(wfh.AdminUserContext(), 30*time.Second, func() {
-			helper.DeleteSecurityGroup(securityGroupName)
-		})
+	SynchronizedAfterSuite(
+		func() {
+			time.Sleep(5*time.Second) // Ensure service instance deletion does not block teardown
+			wfh.Teardown()
+		},
+		func() {
+			workflowhelpers.AsUser(wfh.AdminUserContext(), 30*time.Second, func() {
+				helper.DeleteSecurityGroup(securityGroupName)
+			})
 
-		time.Sleep(5*time.Second) // Ensure service instance deletion does not block teardown
-		wfh.Teardown()
-	})
+			time.Sleep(5*time.Second) // Ensure service instance deletion does not block teardown
+			wfh.Teardown()
+		},
+	)
 
 	RegisterFailHandler(Fail)
 	RunSpecs(t, "Smoke Tests Suite")

@@ -1,4 +1,4 @@
-module rabbitmq-smoke-tests
+module github.com/pivotal-cf/cf-rabbitmq-smoke-tests-release/src/rabbitmq-smoke-tests
 
 go 1.22
 

@@ -6,7 +6,7 @@ import (
 	"os"
 	"time"
 
-	"rabbitmq-smoke-tests/tests/helper"
+	"github.com/pivotal-cf/cf-rabbitmq-smoke-tests-release/src/rabbitmq-smoke-tests/tests/helper"
 
 	"github.com/cloudfoundry/cf-test-helpers/v2/config"
 	"github.com/cloudfoundry/cf-test-helpers/v2/workflowhelpers"

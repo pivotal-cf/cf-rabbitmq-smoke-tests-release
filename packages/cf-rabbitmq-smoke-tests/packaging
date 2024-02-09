@@ -2,17 +2,17 @@
 set -e
 
 PACKAGE_NAME=rabbitmq-smoke-tests
-REPO_TARGET_DIR=${BOSH_INSTALL_TARGET}/src/${PACKAGE_NAME}
+REPO_TARGET_DIR="$BOSH_INSTALL_TARGET/src/$PACKAGE_NAME"
 
-mkdir -p ${REPO_TARGET_DIR}
+mkdir -p "$REPO_TARGET_DIR"
 
-cp -aR ${PACKAGE_NAME}/* ${REPO_TARGET_DIR}
+cp -aR "$PACKAGE_NAME"/* "$REPO_TARGET_DIR"
 
-export GOPATH="${BOSH_INSTALL_TARGET}"
-export GOBIN="${BOSH_INSTALL_TARGET}/bin"
+export GOPATH="$BOSH_INSTALL_TARGET"
+export GOBIN="$BOSH_INSTALL_TARGET/bin"
 export PATH="${PATH}:/var/vcap/packages/cf-rabbitmq-smoke-tests-golang/bin"
 export GOCACHE="${BOSH_INSTALL_TARGET}/cache"
 
-pushd $REPO_TARGET_DIR
+pushd "$REPO_TARGET_DIR"
   go install -mod=vendor github.com/onsi/ginkgo/v2/ginkgo
 popd

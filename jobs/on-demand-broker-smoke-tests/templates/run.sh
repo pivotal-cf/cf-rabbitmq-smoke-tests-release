@@ -6,7 +6,7 @@ export PATH=/var/vcap/packages/cf-cli-7-linux/bin:$GOPATH/bin:$GOROOT/bin:$PATH
 
 export GOCACHE=$PWD/cache
 
-export PACKAGE_DIR=${GOPATH}/src/rabbitmq-smoke-tests
+export PACKAGE_DIR=/var/vcap/packages/cf-rabbitmq-smoke-tests/src/rabbitmq-smoke-tests
 
 export CF_DIAL_TIMEOUT=11
 export CF_HOME="/tmp/cf_home"

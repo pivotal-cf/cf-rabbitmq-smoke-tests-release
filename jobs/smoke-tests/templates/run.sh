@@ -5,7 +5,7 @@ set -e
 . /var/vcap/jobs/smoke-tests/bin/permissions-test
 
 export GOROOT=$(readlink -nf /var/vcap/packages/cf-rabbitmq-smoke-tests-golang)
-export PATH=/var/vcap/packages/cf-cli-7-linux/bin:$GOPATH/bin:$GOROOT/bin:$PATH
+export PATH=/var/vcap/packages/cf-cli-7-linux/bin:/var/vcap/packages/cf-rabbitmq-smoke-tests/bin:$GOROOT/bin:$PATH
 export PACKAGE_DIR=/var/vcap/packages/cf-rabbitmq-smoke-tests/src/rabbitmq-smoke-tests
 
 export GOCACHE=$PWD/cache

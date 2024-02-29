@@ -1,10 +1,12 @@
 package helper
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"strings"
 	"time"
@@ -16,6 +18,8 @@ import (
 
 const RETRY_LIMIT = 5
 const COMMAND_TIMEOUT = 5 * time.Minute
+
+// TODO: add Context to these functions, so that a cancelled test cleans up before the COMMAND_TIMEOUT
 
 func CfWithTimeout(timeout time.Duration, args ...string) *gexec.Session {
 	session := cf.Cf(args...)
@@ -32,6 +36,33 @@ func Cf(args ...string) *gexec.Session {
 	var s *gexec.Session
 	for i := 0; i <= RETRY_LIMIT; i++ {
 		s = CfWithTimeout(COMMAND_TIMEOUT, args...)
+		if s.ExitCode() == 0 {
+			return s
+		}
+		fmt.Printf("Retried: %d out of %d", i, RETRY_LIMIT)
+		time.Sleep(5 * time.Second)
+	}
+	return s
+}
+
+// CfWithBufferedOutput runs cf with given args. It has a command timeout of
+// COMMAND_TIMEOUT minutes, and retries failed commands up to RETRY_LIMIT. The
+// output of the command is not sent to the standard output. Output of the
+// command can be accessed via the returned Session.
+func CfWithBufferedOutput(args ...string) (s *gexec.Session) {
+	cmdOutput := &bytes.Buffer{}
+	for i := 0; i <= RETRY_LIMIT; i++ {
+		var err error
+		s, err = gexec.Start(exec.Command("cf", args...), cmdOutput, cmdOutput)
+		if err != nil {
+			panic(err)
+		}
+
+		select {
+		case <-s.Exited:
+		case <-time.After(COMMAND_TIMEOUT):
+			s.Kill().Wait()
+		}
 		if s.ExitCode() == 0 {
 			return s
 		}

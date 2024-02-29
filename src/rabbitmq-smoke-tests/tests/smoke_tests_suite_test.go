@@ -2,6 +2,7 @@ package smoke_tests
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"os"
 	"time"
@@ -24,6 +25,7 @@ const (
 var (
 	configPath = os.Getenv("CONFIG_PATH")
 	testConfig = loadTestConfig(configPath)
+	logBase    = os.Getenv("SMOKE_TESTS_BASE_LOG_DIR")
 	wfh        *workflowhelpers.ReproducibleTestSuiteSetup
 )
 
@@ -46,7 +48,7 @@ func TestLifecycle(t *testing.T) {
 
 	SynchronizedAfterSuite(
 		func() {
-			time.Sleep(5*time.Second) // Ensure service instance deletion does not block teardown
+			time.Sleep(5 * time.Second) // Ensure service instance deletion does not block teardown
 			wfh.Teardown()
 		},
 		func() {
@@ -54,10 +56,22 @@ func TestLifecycle(t *testing.T) {
 				helper.DeleteSecurityGroup(securityGroupName)
 			})
 
-			time.Sleep(5*time.Second) // Ensure service instance deletion does not block teardown
+			time.Sleep(5 * time.Second) // Ensure service instance deletion does not block teardown
 			wfh.Teardown()
 		},
 	)
+
+	if len(logBase) == 0 {
+		logBase = "."
+	}
+
+	g := NewWithT(t)
+
+	filename := fmt.Sprintf("%s/smoke-test-%d.log", logBase, time.Now().UnixMilli())
+	fileWriter, err := os.Create(filename)
+	g.Expect(err).ToNot(HaveOccurred())
+	GinkgoWriter.TeeTo(fileWriter)
+	defer fileWriter.Close()
 
 	RegisterFailHandler(Fail)
 	RunSpecs(t, "Smoke Tests Suite")
@@ -65,18 +79,18 @@ func TestLifecycle(t *testing.T) {
 
 func loadTestConfig(configPath string) TestConfig {
 	if configPath == "" {
-		panic(fmt.Errorf("Path to config file is empty -- Did you set CONFIG_PATH?"))
+		panic(errors.New("path to config file is empty -- Did you set CONFIG_PATH?"))
 	}
 	configFile, err := os.Open(configPath)
 	if err != nil {
-		panic(fmt.Errorf("Could not open config file at %s --  ERROR %s", configPath, err.Error()))
+		panic(fmt.Errorf("could not open config file at %s --  ERROR %w", configPath, err))
 	}
 
 	defer configFile.Close()
 	var testConfig TestConfig
 	err = json.NewDecoder(configFile).Decode(&testConfig)
 	if err != nil {
-		panic(fmt.Errorf("Could not decode config json -- ERROR: %s", err.Error()))
+		panic(fmt.Errorf("could not decode config json -- ERROR: %w", err))
 	}
 
 	return testConfig

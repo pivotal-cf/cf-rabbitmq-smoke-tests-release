@@ -4,6 +4,13 @@ config/private.yml
 *.a
 *.so
 
+# Local configuration files
+src/rabbitmq-smoke-tests/assets/*.json
+!src/rabbitmq-smoke-tests/assets/example_config.json
+
+# Goland IDE
+.idea/
+
 # Folders
 _obj
 _test

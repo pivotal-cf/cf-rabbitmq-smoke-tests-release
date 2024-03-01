@@ -22,4 +22,4 @@ go-vet:
 	go vet `go list ./... | grep -v vendor`
 
 test:
-	ginkgo -v --trace --randomize-suites --randomize-all --keep-going --fail-on-pending tests
+	ginkgo --no-color --succinct --trace --randomize-suites --randomize-all --keep-going --fail-on-pending tests

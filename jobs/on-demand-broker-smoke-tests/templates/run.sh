@@ -17,8 +17,10 @@ export CONFIG_PATH="/var/vcap/jobs/on-demand-broker-smoke-tests/config.json"
 export CGO_ENABLED=0
 export SMOKE_TESTS_TIMEOUT=1h
 
+export SMOKE_TESTS_BASE_LOG_DIR="/var/vcap/sys/log/on-demand-broker-smoke-tests"
+
 pushd ${PACKAGE_DIR}
   echo "Running on-demand smoke tests"
   # Disbale Go modules and cgo to avoid issue https://github.com/golang/go/issues/26988
-  CGO_ENABLED=0 ginkgo -p -v --trace --randomize-suites --randomize-all --keep-going --timeout="$SMOKE_TESTS_TIMEOUT" --fail-on-pending tests
+  CGO_ENABLED=0 ginkgo -p --no-color --succinct --trace --randomize-suites --randomize-all --keep-going --timeout="$SMOKE_TESTS_TIMEOUT" --fail-on-pending tests
 popd

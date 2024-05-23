@@ -72,7 +72,7 @@ func CfWithBufferedOutput(args ...string) (s *gexec.Session) {
 	return s
 }
 
-func CreateAndBindSecurityGroup(securityGroupName, orgName, spaceName string) {
+func CreateSecurityGroup(securityGroupName string) {
 	sgs := []struct {
 		Protocol    string `json:"protocol"`
 		Destination string `json:"destination"`
@@ -90,6 +90,9 @@ func CreateAndBindSecurityGroup(securityGroupName, orgName, spaceName string) {
 	Expect(err).NotTo(HaveOccurred(), `{"FailReason": "Failed to encode security groups"}`)
 
 	Expect(Cf("create-security-group", securityGroupName, sgFile.Name())).To(gexec.Exit(0))
+}
+
+func BindSecurityGroup(securityGroupName, orgName, spaceName string) {
 	Expect(Cf("bind-security-group", securityGroupName, orgName, "--space", spaceName)).To(gexec.Exit(0))
 }
 

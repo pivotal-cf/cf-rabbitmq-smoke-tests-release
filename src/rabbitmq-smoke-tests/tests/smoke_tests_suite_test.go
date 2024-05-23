@@ -35,7 +35,8 @@ func TestLifecycle(t *testing.T) {
 		wfh.Setup()
 
 		workflowhelpers.AsUser(wfh.AdminUserContext(), 30*time.Second, func() {
-			helper.CreateAndBindSecurityGroup(securityGroupName, wfh.TestSpace.OrganizationName(), wfh.TestSpace.SpaceName())
+			helper.CreateSecurityGroup(securityGroupName)
+			helper.BindSecurityGroup(securityGroupName, wfh.TestSpace.OrganizationName(), wfh.TestSpace.SpaceName())
 		})
 
 		return []byte{}
@@ -43,6 +44,10 @@ func TestLifecycle(t *testing.T) {
 		if wfh == nil {
 			wfh = workflowhelpers.NewTestSuiteSetup(&testConfig.Config)
 			wfh.Setup()
+
+			workflowhelpers.AsUser(wfh.AdminUserContext(), 30*time.Second, func() {
+				helper.BindSecurityGroup(securityGroupName, wfh.TestSpace.OrganizationName(), wfh.TestSpace.SpaceName())
+			})
 		}
 	})
 

@@ -15,7 +15,7 @@ mkdir -p "$CF_HOME"
 
 export CONFIG_PATH="/var/vcap/jobs/on-demand-broker-smoke-tests/config.json"
 export CGO_ENABLED=0
-export SMOKE_TESTS_TIMEOUT=1h
+export SMOKE_TESTS_TIMEOUT=<%= p("smoke_tests_timeout") %>
 
 export SMOKE_TESTS_BASE_LOG_DIR="/var/vcap/sys/log/on-demand-broker-smoke-tests"
 

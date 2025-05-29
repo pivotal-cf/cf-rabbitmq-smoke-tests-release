@@ -5,7 +5,7 @@ packages:
 - cf-rabbitmq-smoke-tests
 
 templates:
-  run.sh: bin/run
+  run.sh.erb: bin/run
   config.json.erb: config.json
 
 properties:
@@ -41,3 +41,6 @@ properties:
   smoke_tests_apps_domain:
     description: Deprecated
     default: ""
+  smoke_tests_timeout:
+    description: Timeout for smoke tests
+    default: "60m"

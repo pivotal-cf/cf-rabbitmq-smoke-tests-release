@@ -27,6 +27,16 @@ module Bosh::Template::Test
 
     let(:rendered) { template.render(merged_manifest_properties) }
 
+    def properties_with_new_plans(plans)
+      properties = Marshal.load(Marshal.dump(merged_manifest_properties))
+      properties['cf']['plans'] = plans
+      properties
+    end
+
+    def rendered_custom_properties(properties)
+      template.render(properties)
+    end
+
     describe 'apps_domain' do
       context 'when smoke_tests_apps_domain is present' do
         it('is set to smoke_tests_apps_domain') do
@@ -93,6 +103,45 @@ module Bosh::Template::Test
             existing_space: 'my-space',
             use_existing_space: true
           )
+        end
+      end
+    end
+
+    describe 'plans' do
+      context 'when no plans passed' do
+        it 'should have no plans in the properties' do
+          rendered_properties = rendered_custom_properties(properties_with_new_plans([]))
+          expect(rendered_properties).to include_json(plans: [])
+        end
+      end
+
+      context 'when plans with run_smoke_tests property is passed' do
+        it 'should have plan in the properties' do
+          rendered_properties = rendered_custom_properties(properties_with_new_plans([{ 'name' => 'multi-node' }]))
+          expect(rendered_properties).to include_json(plans: [{ 'name' => 'multi-node' }])
+        end
+      end
+
+      context 'when plans with no run_smoke_tests property is passed' do
+        it 'should have plan based on run_smoke_tests property of the plan' do
+          rendered_properties = rendered_custom_properties(properties_with_new_plans(
+            [
+              { 'name' => 'multi-node', 'run_smoke_tests' => true },
+              { 'name' => 'single-node', 'run_smoke_tests' => false },
+            ]
+          ))
+          expect(rendered_properties).to include_json(plans: [{ 'name' => 'multi-node' }])
+        end
+      end
+
+      context 'when plans with run_smoke_tests with different value type is passed' do
+        it 'should have no plan in the properties' do
+          rendered_properties = rendered_custom_properties(properties_with_new_plans(
+            [
+              { 'name' => 'single-node', 'run_smoke_tests' => 'false' },
+            ]
+          ))
+          expect(rendered_properties).to include_json(plans: [])
         end
       end
     end

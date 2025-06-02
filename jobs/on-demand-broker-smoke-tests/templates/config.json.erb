@@ -20,7 +20,7 @@ conf = {
   timeout_scale: 30.0,
   skip_ssl_validation: true,
   service_offering: p("cf.service_offering_name"),
-  plans: p("cf.plans").reject { |plan| plan.nil? },
+  plans: p("cf.plans").reject { |plan| plan.key?("run_smoke_tests") && plan["run_smoke_tests"] != true },
   tls_support: p("tls_support"),
   oauth_enforced: p("oauth_enforced"),
 }

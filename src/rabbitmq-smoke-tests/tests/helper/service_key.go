@@ -2,9 +2,10 @@ package helper
 
 import (
 	"encoding/json"
+	"regexp"
+
 	. "github.com/onsi/gomega"
 	"github.com/onsi/gomega/gexec"
-	"regexp"
 )
 
 var serviceKeyHeader = regexp.MustCompile(`^\s*Getting key .*`)
@@ -25,15 +26,30 @@ type ServiceKey struct {
 }
 
 func GetServiceKey(serviceName, keyName string) ServiceKey {
-	// this function only works with CF CLI v7. CF CLI v8 changed the format of the service key
+	// this function works with both CF CLI v7 and v8. CF CLI v8 wraps the service key in a "credentials" object
 	session := CfWithBufferedOutput("service-key", serviceName, keyName)
 	Expect(session).To(gexec.Exit(0))
 
 	chopped := serviceKeyHeader.ReplaceAllLiteral(session.Buffer().Contents(), []byte{})
 
+	// First try to parse as CF CLI v7 format (direct ServiceKey)
 	var serviceKey ServiceKey
-	Expect(json.Unmarshal(chopped, &serviceKey)).To(Succeed())
+	err := json.Unmarshal(chopped, &serviceKey)
+	if err == nil && serviceKey.DashboardUrl != "" {
+		return serviceKey
+	}
 
+	// If that fails or DashboardUrl is empty, try CF CLI v8 format (wrapped in credentials)
+	var v8Response struct {
+		Credentials ServiceKey `json:"credentials"`
+	}
+	err = json.Unmarshal(chopped, &v8Response)
+	if err == nil {
+		return v8Response.Credentials
+	}
+
+	// If both fail, fall back to the original parsing and let it fail with the original error
+	Expect(json.Unmarshal(chopped, &serviceKey)).To(Succeed())
 	return serviceKey
 }
 

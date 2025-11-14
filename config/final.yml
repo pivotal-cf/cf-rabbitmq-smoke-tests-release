@@ -4,4 +4,4 @@ min_cli_version: 1.2690.0
 blobstore:
   provider: gcs
   options:
-    bucket_name: pcf-rmq-smoke-tests-bosh-release-blobs
+    bucket_name: cf-rmq-smoke-tests-bosh-release-blobs

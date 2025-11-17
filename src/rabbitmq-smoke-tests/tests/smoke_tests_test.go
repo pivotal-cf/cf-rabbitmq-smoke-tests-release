@@ -36,17 +36,6 @@ var _ = Describe("Smoke tests", func() {
 
 				helper.CreateServiceKey(serviceName, serviceKeyName)
 
-				defer func() {
-					By("unbinding the app")
-					helper.UnbindService(appName, serviceName)
-					By("deleting the app")
-					helper.DeleteApp(appName)
-					By("deleting the service key")
-					helper.DeleteServiceKey(serviceName, serviceKeyName)
-					By("deleting the service instance")
-					helper.DeleteService(serviceName)
-				}()
-
 				By("pushing and binding an app")
 				appURL := helper.PushAndBindApp(appName, serviceName, appPath)
 

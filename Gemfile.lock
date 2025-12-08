@@ -24,7 +24,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bosh-template
+  bosh-template (~> 2.4.0)
   rspec
   rspec-json_expectations
 

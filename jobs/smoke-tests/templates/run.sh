@@ -6,7 +6,7 @@ set -e
 
 export GOROOT=$(readlink -nf /var/vcap/packages/cf-rabbitmq-smoke-tests-golang)
 export GOPATH=/var/vcap/packages/cf-rabbitmq-smoke-tests
-export PATH=/var/vcap/packages/cf-cli-8-linux/bin:$GOPATH/bin:$GOROOT/bin:$PATH
+export PATH=/var/vcap/packages/tanzu-cf-cli-linux/bin:$GOPATH/bin:$GOROOT/bin:$PATH
 export PACKAGE_DIR=/var/vcap/packages/cf-rabbitmq-smoke-tests/src/rabbitmq-smoke-tests
 
 export GOCACHE=$PWD/cache

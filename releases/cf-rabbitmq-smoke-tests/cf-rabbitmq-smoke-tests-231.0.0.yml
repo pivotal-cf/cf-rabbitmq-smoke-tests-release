@@ -1,0 +1,35 @@
+name: cf-rabbitmq-smoke-tests
+version: 231.0.0
+commit_hash: 719601a
+uncommitted_changes: false
+jobs:
+- name: on-demand-broker-smoke-tests
+  version: 965fa394843fe08a1c49d66ab49ceed4dcd46d9422cd95f79ca2866dbad7e482
+  fingerprint: 965fa394843fe08a1c49d66ab49ceed4dcd46d9422cd95f79ca2866dbad7e482
+  sha1: sha256:61324bc353b5c0ae3f2705c1e4cce6e078949de91a1e1a533edb43ee1c25fea5
+  packages:
+  - cf-rabbitmq-smoke-tests-golang
+  - cf-rabbitmq-smoke-tests
+- name: smoke-tests
+  version: df25da79c8fab042f7b89fee463dac2dd44bfc6e5dd87aded3a0192ed73f66bc
+  fingerprint: df25da79c8fab042f7b89fee463dac2dd44bfc6e5dd87aded3a0192ed73f66bc
+  sha1: sha256:66b8f1cc64fcd9ebdf5a31568046173af5d2aa7bd22a3220c6d81608ccd121b0
+  packages:
+  - cf-rabbitmq-smoke-tests-golang
+  - cf-rabbitmq-smoke-tests
+packages:
+- name: cf-rabbitmq-smoke-tests
+  version: 0d1405a0185fd8532d3ff36e542786dcf4b0b3507dc08f09c1569db2b8d96a8c
+  fingerprint: 0d1405a0185fd8532d3ff36e542786dcf4b0b3507dc08f09c1569db2b8d96a8c
+  sha1: sha256:a920f531219cefdc1a7e0b493c9a210b3d1a59b91df695e93956c2629e874486
+  dependencies:
+  - cf-rabbitmq-smoke-tests-golang
+- name: cf-rabbitmq-smoke-tests-golang
+  version: 1baee722f512e9badda2502d2d3f4e6e7533fad4d136dbfbf15ef43d6580a6c4
+  fingerprint: 1baee722f512e9badda2502d2d3f4e6e7533fad4d136dbfbf15ef43d6580a6c4
+  sha1: sha256:ce58ee0fd1bedd75569c188784a1c21bef190b598030028b8301d18ce99a6b57
+  dependencies: []
+license:
+  version: 49fbaeb620f2c5c0be363960c509729fdbcdd7658941295c0a3aa2157e84a457
+  fingerprint: 49fbaeb620f2c5c0be363960c509729fdbcdd7658941295c0a3aa2157e84a457
+  sha1: sha256:9d047aa8cfd5b0324aa251e4079e60f6ab25e5eb9c3bde850fd566f5984017bd

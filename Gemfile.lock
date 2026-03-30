@@ -14,7 +14,7 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.13.0)
     rspec-json_expectations (2.2.0)
-    rspec-mocks (3.13.7)
+    rspec-mocks (3.13.8)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.13.0)
     rspec-support (3.13.7)
@@ -32,4 +32,4 @@ RUBY VERSION
   ruby 3.4.8
 
 BUNDLED WITH
-  4.0.5
+  4.0.9

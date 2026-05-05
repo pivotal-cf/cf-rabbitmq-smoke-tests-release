@@ -1,0 +1,8 @@
+---
+name: smoke-tests-runner
+
+dependencies:
+- jq
+
+files:
+- smoke-tests-runner/run.sh

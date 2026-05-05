@@ -1,12 +1,13 @@
 ---
 name: on-demand-broker-smoke-tests
+
 packages:
-- cf-rabbitmq-smoke-tests-golang
-- cf-rabbitmq-smoke-tests
+- smoke-tests-runner
+- jq
 
 templates:
-  run.sh.erb: bin/run
-  config.json.erb: config.json
+  run.sh:              bin/run
+  config.env.erb:      config/config.env
 
 properties:
   cf.api_url:

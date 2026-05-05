@@ -1,0 +1,7 @@
+---
+name: jq
+metadata:
+  version: '1.8.1'
+
+files:
+- jq/jq

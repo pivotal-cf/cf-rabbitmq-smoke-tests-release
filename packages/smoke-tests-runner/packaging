@@ -1,6 +1,0 @@
-#!/bin/bash
-set -e
-
-mkdir -p "${BOSH_INSTALL_TARGET}/bin"
-cp smoke-tests-runner/run.sh "${BOSH_INSTALL_TARGET}/bin/run"
-chmod +x "${BOSH_INSTALL_TARGET}/bin/run"

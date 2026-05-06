@@ -1,4 +1,6 @@
-jq/jq:
-  size: 2255816
-  object_id: d96a01d4-f42b-41d9-46a1-563f5c13ffaa
-  sha: sha256:020468de7539ce70ef1bceaf7cde2e8c4f2ca6c3afb84642aabc5c97d9fc2a0d
+---
+# this comment prevents git conflicts
+cf-rabbitmq-smoke-tests-golang/go1.26.2.linux-amd64.tar.gz:
+  size: 66798306
+  object_id: 34987a23-23f2-4875-54c7-5c6f1188d2a8
+  sha: sha256:990e6b4bbba816dc3ee129eaeaf4b42f17c2800b88a2166c265ac1a200262282

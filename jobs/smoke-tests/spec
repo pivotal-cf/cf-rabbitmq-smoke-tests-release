@@ -1,15 +1,15 @@
 ---
 name: smoke-tests
 
-packages:
-- smoke-tests-runner
-- jq
-
 templates:
   run.sh: bin/run
-  config.env.erb: config/config.env
+  config.json.erb: config.json
   change-permissions.sh: bin/change-permissions
   permissions-test.sh: bin/permissions-test
+
+packages:
+- cf-rabbitmq-smoke-tests-golang
+- cf-rabbitmq-smoke-tests
 
 consumes:
 - name: cloud_controller

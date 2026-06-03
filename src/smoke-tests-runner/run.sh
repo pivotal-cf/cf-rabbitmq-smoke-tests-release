@@ -150,6 +150,7 @@ trap cleanup EXIT
 
 log "--- CF login & Setup"
 cf api --skip-ssl-validation "${CF_API}"
+cf login "${CF_ADMIN_CLIENT}" "${CF_ADMIN_CLIENT_SECRET}" --client-credentials
 
 cf_cmd create-org "${CF_ORG}" || true
 cf_cmd create-space "${CF_SPACE}" -o "${CF_ORG}" || true

@@ -3,7 +3,7 @@ set -euo pipefail
 
 # ---- Logging ----------------------------------------------------------------
 
-LOG_DIR="/var/vcap/sys/log/on-demand-broker-smoke-tests"
+LOG_DIR="${SMOKE_TEST_LOG_DIR:-/var/vcap/sys/log/smoke-tests}"
 LOG_FILE="${LOG_DIR}/smoke-tests.log"
 mkdir -p "${LOG_DIR}"
 

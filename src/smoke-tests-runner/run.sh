@@ -31,10 +31,6 @@ source "${CONFIG_ENV_PATH:?CONFIG_ENV_PATH must be set by the calling job}"
 
 CF_ORG="${CF_ORG:-system}"
 CF_SPACE="${CF_SPACE:-rabbitmq-smoke-test}"
-
-# SMOKE_TEST_TIMEOUT_SECS is pre-computed (in seconds) by the BOSH job ERB
-# template from the smoke_tests_timeout property (e.g. "60m" → 3600).
-# Default to 3600s when not provided by the job (e.g. smoke-tests job).
 SMOKE_TEST_TIMEOUT_SECS="${SMOKE_TEST_TIMEOUT_SECS:-3600}"
 
 log "--- Configuration"
@@ -79,12 +75,6 @@ remaining_seconds() {
 
 # $SECONDS value recorded at the last successful cf auth call.
 CF_AUTH_TIME=0
-
-# Re-authenticates with CF when the current token is approaching expiry and
-# re-targets the org/space (cf auth resets the target in CF CLI v7+).
-# UAA client-credential tokens typically expire after 60 minutes; re-authing
-# at 50 minutes (3000s) gives a safe buffer and prevents mid-test failures
-# with "Credentials were rejected, please try again".
 ensure_cf_auth() {
   local elapsed=$(( SECONDS - CF_AUTH_TIME ))
   if (( elapsed >= 3000 )); then
@@ -95,22 +85,11 @@ ensure_cf_auth() {
   fi
 }
 
-# Single entry-point for every CF command in the main test flow.
-# Refreshes the CF token if it is approaching expiry, then runs the command
-# under a dynamic timeout derived from the remaining global budget.
-# Safe to use inside command substitutions ($(...)).
 cf_cmd() {
   ensure_cf_auth
   timeout "$(remaining_seconds)s" cf "$@"
 }
 
-# Polls `cf service INSTANCE` until the last operation reaches a terminal
-# state. Calls ensure_cf_auth before each poll so the token stays fresh
-# across operations that outlast the UAA token TTL (the core reason -w fails:
-# CF CLI blocks internally and cannot refresh-and-retarget cleanly).
-# Usage: cf_wait_for_service INSTANCE OPERATION [MAX_SECS]
-#   OPERATION : create | update | delete
-#   MAX_SECS  : hard cap for this wait; omit/0 to use the global budget.
 cf_wait_for_service() {
   local instance_name="$1"
   local operation="$2"
@@ -131,7 +110,6 @@ cf_wait_for_service() {
     fi
 
     ensure_cf_auth
-
     local output exit_code
     output=$(timeout 60s cf service "${instance_name}" 2>&1) && exit_code=0 || exit_code=$?
 
@@ -140,18 +118,12 @@ cf_wait_for_service() {
       if [[ "${operation}" == "delete" ]] && echo "${output}" | grep -qiE "not found|does not exist"; then
         return 0
       fi
-      # Any other non-zero is a transient CF API error — log raw output and retry.
-      # Do NOT try to parse status from an error message: grep's non-zero exit on
-      # no-match combined with set -e/pipefail would terminate the script.
       log "    Polling '${instance_name}': cf service exited ${exit_code}, retrying in 15s"
       log "    Output: ${output}"
       sleep 15
       continue
     fi
 
-    # sed exits 0 even when there is no match — safe under set -e/pipefail.
-    # Handles 'status:' (CF CLI v7) and 'Status:' (CF CLI v8+), with optional
-    # leading whitespace. Using grep here would cause set -e to fire on no-match.
     local status
     status=$(echo "${output}" | sed -n 's/^[[:space:]]*[Ss]tatus:[[:space:]]*//p' | head -1 | sed 's/[[:space:]]*$//')
 
@@ -251,56 +223,29 @@ delete_queue() {
 # each successful plan iteration so the trap is a no-op on normal exit.
 cleanup() {
   local exit_code=$?
+
   if [[ -n "${INSTANCE_NAME}" ]]; then
     log "--- Cleanup (${INSTANCE_NAME})"
-    # Re-auth unconditionally — token may be stale after a timeout or failure.
-    # Update CF_AUTH_TIME so subsequent ensure_cf_auth calls behave correctly.
-    cf auth "${CF_ADMIN_CLIENT}" "${CF_ADMIN_CLIENT_SECRET}" --client-credentials 2>/dev/null || true
-    cf target -o "${CF_ORG}" -s "${CF_SPACE}" 2>/dev/null || true
-    CF_AUTH_TIME=$SECONDS
+
+    # Reset CF_AUTH_TIME to force ensure_cf_auth to fetch a fresh token.
+    # This protects against stale tokens if the script hit a global timeout.
+    CF_AUTH_TIME=0
+    ensure_cf_auth 2>/dev/null || true
+
     cf delete-service-key "${INSTANCE_NAME}" "${KEY_NAME}" -f 2>/dev/null || true
 
-    # Delete loop: if the service is in a non-delete state (e.g. "create in
-    # progress") the initial delete command will fail. Wait for the service to
-    # reach a stable state, then retry delete. Uses raw cf calls (not cf_cmd)
-    # with explicit auth refresh to stay safe after a global-timeout exit.
-    local _dl=$(( SECONDS + 1800 )) _last_st=""
-    while (( SECONDS < _dl )); do
-      local _el=$(( SECONDS - CF_AUTH_TIME ))
-      if (( _el >= 3000 )); then
-        cf auth "${CF_ADMIN_CLIENT}" "${CF_ADMIN_CLIENT_SECRET}" --client-credentials 2>/dev/null || true
-        cf target -o "${CF_ORG}" -s "${CF_SPACE}" 2>/dev/null || true
-        CF_AUTH_TIME=$SECONDS
+    local deadline=$(( SECONDS + 1800 ))
+    while (( SECONDS < deadline )); do
+      cf delete-service "${INSTANCE_NAME}" -f 2>/dev/null || true
+      if cf_wait_for_service "${INSTANCE_NAME}" "delete" 60; then
+        log "--- Cleanup: ${INSTANCE_NAME} deleted."
+        break
       fi
-      local _out _ex
-      _out=$(timeout 60s cf service "${INSTANCE_NAME}" 2>&1) && _ex=0 || _ex=$?
-      if [[ ${_ex} -ne 0 ]]; then
-        if echo "${_out}" | grep -qiE "not found|does not exist"; then
-          log "--- Cleanup: ${INSTANCE_NAME} deleted."
-          break
-        fi
-        log "--- Cleanup: cf service exited ${_ex}; retrying..."
-        sleep 15
-        continue
-      fi
-      local _st
-      _st=$(echo "${_out}" | sed -n 's/^[[:space:]]*[Ss]tatus:[[:space:]]*//p' | head -1 | sed 's/[[:space:]]*$//')
-      if [[ "${_st}" != "${_last_st}" ]]; then
-        log "--- Cleanup: ${INSTANCE_NAME} status=${_st:-<unparsed>}"
-        _last_st="${_st}"
-      fi
-      case "${_st}" in
-        "delete in progress") sleep 15 ;;
-        "delete succeeded"|"") log "--- Cleanup: ${INSTANCE_NAME} deleted."; break ;;
-        *)
-          # Any non-delete state (create in progress, create succeeded, create
-          # failed, etc.): issue delete and wait before polling again.
-          cf delete-service "${INSTANCE_NAME}" -f 2>/dev/null || true
-          sleep 30 ;;
-      esac
     done
   fi
+
   cf logout 2>/dev/null || true
+
   if [[ ${exit_code} -eq 124 ]]; then
     log "SMOKE TESTS FAILED: global timeout of ${SMOKE_TEST_TIMEOUT_SECS}s exceeded"
     log "======================================== RUN END (FAILED — TIMEOUT) ========================================"

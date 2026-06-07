@@ -1,0 +1,36 @@
+name: cf-rabbitmq-smoke-tests
+version: 271.0.0
+commit_hash: 68965dea
+uncommitted_changes: false
+jobs:
+- name: on-demand-broker-smoke-tests
+  version: 6f559b04231338f094eb2693ee228c32df6efb30ac8e51a55452ad36f37854a7
+  fingerprint: 6f559b04231338f094eb2693ee228c32df6efb30ac8e51a55452ad36f37854a7
+  sha1: sha256:d3c7539892a18b4d4e563e7cba7b56acd268238af3cfc206b926b7141d0883de
+  packages:
+  - smoke-tests-runner
+  - jq
+- name: smoke-tests
+  version: cc3fa2d0bb1f97c356fd3f4bd7b9da1ffea002ab514bb528f463d391c70aecae
+  fingerprint: cc3fa2d0bb1f97c356fd3f4bd7b9da1ffea002ab514bb528f463d391c70aecae
+  sha1: sha256:217bff366f345ab885c72647dd5921dc600f436acd3d9763059fd4fe5312c39e
+  packages:
+  - smoke-tests-runner
+  - jq
+packages:
+- name: jq
+  version: e9907dda7c513b224a0d9a9020e321ab51db0ef604096cdff812d7641a1926c2
+  fingerprint: e9907dda7c513b224a0d9a9020e321ab51db0ef604096cdff812d7641a1926c2
+  sha1: sha256:2a5c996434f48e6d594e5b402b49bfabd20153ad759569443418b318ebc4be2b
+  dependencies: []
+- name: smoke-tests-runner
+  version: 2c2629e9312d3cbd90182806ab4d4045b9a84e1b38c5e3d0ded09fb1a649662b
+  fingerprint: 2c2629e9312d3cbd90182806ab4d4045b9a84e1b38c5e3d0ded09fb1a649662b
+  sha1: sha256:09dce05ac0ad8f1f10a6203f704dfe55207b1184df74ea0929de5471ff38ed08
+  dependencies:
+  - jq
+license:
+  version: 49fbaeb620f2c5c0be363960c509729fdbcdd7658941295c0a3aa2157e84a457
+  fingerprint: 49fbaeb620f2c5c0be363960c509729fdbcdd7658941295c0a3aa2157e84a457
+  sha1: sha256:e63446f5087d918bc0655f1c81c98b906f648a068efc24167b7dcc3e2eef5653
+no_compression: false

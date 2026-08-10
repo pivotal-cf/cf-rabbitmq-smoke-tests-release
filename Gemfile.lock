@@ -29,7 +29,7 @@ DEPENDENCIES
   rspec-json_expectations
 
 RUBY VERSION
-  ruby 3.4.9
+  ruby 3.4.10
 
 BUNDLED WITH
-  4.0.16
+  4.0.18

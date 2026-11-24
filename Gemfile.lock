@@ -8,16 +8,16 @@ GEM
       rspec-core (~> 3.13.0)
       rspec-expectations (~> 3.13.0)
       rspec-mocks (~> 3.13.0)
-    rspec-core (3.13.6)
+    rspec-core (3.13.7)
       rspec-support (~> 3.13.0)
-    rspec-expectations (3.13.5)
+    rspec-expectations (3.13.6)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.13.0)
     rspec-json_expectations (2.2.0)
-    rspec-mocks (3.13.8)
+    rspec-mocks (3.13.9)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.13.0)
-    rspec-support (3.13.7)
+    rspec-support (3.13.8)
     semi_semantic (1.2.0)
 
 PLATFORMS
@@ -29,7 +29,7 @@ DEPENDENCIES
   rspec-json_expectations
 
 RUBY VERSION
-  ruby 3.4.10
+  ruby 3.4.12
 
 BUNDLED WITH
-  4.0.20
+  4.1.0
